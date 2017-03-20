@@ -87,7 +87,8 @@ public class MainActivity extends AppCompatActivity
             toolbar.setTitle("Vacinas");
             fragment = new VaccinesFragment();
         } else if (id == R.id.nav_scheduling) {
-
+            toolbar.setTitle("Agendamentos");
+            fragment = new SchedulesFragment();
         } else if (id == R.id.nav_food) {
             toolbar.setTitle("Pedir Ração");
             fragment = new FoodOrderingFragment();
