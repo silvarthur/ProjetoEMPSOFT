@@ -9,7 +9,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 
 
 /**
@@ -70,6 +72,12 @@ public class SchedulesFragment extends Fragment {
                 fragmentTransaction.commit();
             }
         });
+        String[] mobileArray = {"Consulta 1","Consulta 2","Banho e Tosa 1","Banho 1",
+                "Tosa 1","Banho 2","Tosa 2"};
+
+        ArrayAdapter adapter = new ArrayAdapter<String>(getContext(), R.layout.schedule_list_item, mobileArray);
+        ListView listView = (ListView) myView.findViewById(R.id.scheduleListView);
+        listView.setAdapter(adapter);
 
         return myView;
     }
