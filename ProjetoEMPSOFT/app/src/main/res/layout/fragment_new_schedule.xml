@@ -1,0 +1,73 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.projetoempsoft.NewScheduleFragment"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal">
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tosa"
+            android:id="@+id/tosaCheck"
+            android:layout_margin="10dp"
+            />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Banho"
+            android:id="@+id/banhoCheck"
+            android:layout_margin="10dp" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Consulta"
+            android:id="@+id/consultaCheck"
+            android:layout_margin="10dp" />
+
+    </LinearLayout>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:ems="10"
+        android:id="@+id/scheduleDate"
+        android:layout_gravity="center_horizontal"
+        android:hint="Data"
+        android:layout_margin="10dp"
+        android:windowSoftInputMode="stateUnchanged"
+
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/scheduleHour"
+        android:layout_gravity="center_horizontal"
+        android:hint="Hora"
+        android:layout_margin="10dp"
+        android:windowSoftInputMode="stateUnchanged"
+
+        />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Marcar"
+        android:id="@+id/submitSchedule"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="200dp" />
+
+
+</LinearLayout>
