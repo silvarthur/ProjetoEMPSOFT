@@ -1,4 +1,4 @@
-package com.example.projetoempsoft;
+package com.example.projetoempsoft.activities;
 
 import android.content.Context;
 import android.net.Uri;
@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.example.projetoempsoft.R;
 
 
 /**

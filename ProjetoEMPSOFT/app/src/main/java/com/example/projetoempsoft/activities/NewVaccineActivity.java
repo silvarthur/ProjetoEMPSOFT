@@ -1,4 +1,4 @@
-package com.example.projetoempsoft;
+package com.example.projetoempsoft.activities;
 
 import android.app.DatePickerDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +8,10 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.projetoempsoft.R;
+import com.example.projetoempsoft.models.Vaccine;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -23,6 +27,7 @@ public class NewVaccineActivity extends AppCompatActivity {
     Button chooseDateButton;
     TextView returnDate;
     Button chooseReturnDateButton;
+    Button confirmbutton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +40,7 @@ public class NewVaccineActivity extends AppCompatActivity {
         chooseDateButton = (Button) findViewById(R.id.chooseDate);
         returnDate = (TextView) findViewById(R.id.returnDate);
         chooseReturnDateButton = (Button) findViewById(R.id.chooseReturnDate);
+        confirmbutton = (Button) findViewById(R.id.confirmVaccine);
 
         chooseDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,6 +54,16 @@ public class NewVaccineActivity extends AppCompatActivity {
             public void onClick(View view) {
                 new DatePickerDialog(NewVaccineActivity.this, listenerTwo, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
             }
+        });
+
+        confirmbutton.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+
+               Vaccine vaccine = new Vaccine(vaccineType.getText().toString(), veterinarian.getText().toString(), date.getText().toString(), returnDate.getText().toString());
+
+               Toast.makeText(getApplication(), "Adicionando nova vacina...", Toast.LENGTH_SHORT).show();
+           }
         });
 
     }

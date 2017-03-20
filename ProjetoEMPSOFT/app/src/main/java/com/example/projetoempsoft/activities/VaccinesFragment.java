@@ -1,14 +1,25 @@
-package com.example.projetoempsoft;
+package com.example.projetoempsoft.activities;
 
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
+
+import com.example.projetoempsoft.R;
+import com.example.projetoempsoft.adapters.VaccineListAdapter;
+import com.example.projetoempsoft.models.Vaccine;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -22,12 +33,17 @@ import android.widget.Button;
 public class VaccinesFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    //private static final String ARG_PARAM1 = "param1";
+    //private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    //private String mParam1;
+    //private String mParam2;
+
+    public Button addNewVaccineButton;
+
+    private RecyclerView listOfVaccines;
+    private RecyclerView.Adapter adapter;
 
     private OnFragmentInteractionListener mListener;
 
@@ -47,8 +63,8 @@ public class VaccinesFragment extends Fragment {
     public static VaccinesFragment newInstance(String param1, String param2) {
         VaccinesFragment fragment = new VaccinesFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        //args.putString(ARG_PARAM1, param1);
+        //args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,19 +72,35 @@ public class VaccinesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        //if (getArguments() != null) {
+            //mParam1 = getArguments().getString(ARG_PARAM1);
+            //mParam2 = getArguments().getString(ARG_PARAM2);
+        //}
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_vaccines, container, false);
 
-        Button addVaccineButton = (Button) view.findViewById(R.id.add_vaccine_button);
+        listOfVaccines = (RecyclerView) view.findViewById(R.id.vaccinesList);
 
-        addVaccineButton.setOnClickListener(new View.OnClickListener() {
+        List<Vaccine> data = new ArrayList<>();
+        Vaccine vaccine1 = new Vaccine("Doença1", "Dr. Goku", "01/01/2016", "02/02/2016");
+        Vaccine vaccine2 = new Vaccine("Doença2", "Dr. Urameshi", "12/01/2016", "12/02/2016");
+        Vaccine vaccine3 = new Vaccine("Doença3", "Dr. Monkey D. Ruffy", "12/01/2016", "12/03/2016");
+        Vaccine vaccine4 = new Vaccine("Doença4", "Dr. Gohan", "13/04/2016", "15/06/2016");
+        data.add(vaccine1);
+        data.add(vaccine2);
+        data.add(vaccine3);
+        data.add(vaccine4);
+
+        adapter = new VaccineListAdapter(data);
+
+        listOfVaccines.setAdapter(adapter);
+        listOfVaccines.setLayoutManager(new LinearLayoutManager(this.getContext()));
+
+        addNewVaccineButton = (Button) view.findViewById(R.id.add_new_vaccine_button);
+        addNewVaccineButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), NewVaccineActivity.class);
