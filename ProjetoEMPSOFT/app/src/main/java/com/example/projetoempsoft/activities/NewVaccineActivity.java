@@ -63,6 +63,7 @@ public class NewVaccineActivity extends AppCompatActivity {
                Vaccine vaccine = new Vaccine(vaccineType.getText().toString(), veterinarian.getText().toString(), date.getText().toString(), returnDate.getText().toString());
 
                Toast.makeText(getApplication(), "Adicionando nova vacina...", Toast.LENGTH_SHORT).show();
+               finish();
            }
         });
 
