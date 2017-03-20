@@ -1,4 +1,4 @@
-package com.example.projetoempsoft;
+package com.example.projetoempsoft.activities;
 
 import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
@@ -16,14 +16,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import java.sql.Time;
+import com.example.projetoempsoft.R;
 
 
 /**

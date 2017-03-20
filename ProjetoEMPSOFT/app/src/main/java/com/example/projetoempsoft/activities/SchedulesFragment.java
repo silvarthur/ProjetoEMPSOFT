@@ -1,4 +1,4 @@
-package com.example.projetoempsoft;
+package com.example.projetoempsoft.activities;
 
 import android.content.Context;
 import android.net.Uri;
@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+
+import com.example.projetoempsoft.R;
 
 
 /**
