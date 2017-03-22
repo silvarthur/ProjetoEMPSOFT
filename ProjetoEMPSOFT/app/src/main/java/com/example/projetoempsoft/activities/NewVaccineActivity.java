@@ -1,6 +1,7 @@
 package com.example.projetoempsoft.activities;
 
 import android.app.DatePickerDialog;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,9 +12,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.projetoempsoft.R;
-import com.example.projetoempsoft.models.Vaccine;
+import com.example.projetoempsoft.helper.DatabaseHelper;
+import com.example.projetoempsoft.helper.TipoVacinaDatabaseTable;
+import com.example.projetoempsoft.helper.VeterinarioDatabaseTable;
+import com.example.projetoempsoft.models.Vacina;
+import com.example.projetoempsoft.models.Veterinario;
 
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class NewVaccineActivity extends AppCompatActivity {
@@ -57,14 +64,25 @@ public class NewVaccineActivity extends AppCompatActivity {
         });
 
         confirmbutton.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
+            @Override
+            public void onClick(View view) {
+                DatabaseHelper mDbHelper = new DatabaseHelper(getApplicationContext());
+                SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
-               Vaccine vaccine = new Vaccine(vaccineType.getText().toString(), veterinarian.getText().toString(), date.getText().toString(), returnDate.getText().toString());
+                DateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
+                Vacina vacina = null;
+                try {
+                    vacina = new Vacina(TipoVacinaDatabaseTable.getPorID(db, 0),
+                            formater.parse(date.getText().toString()),
+                            formater.parse(returnDate.getText().toString()),
+                            VeterinarioDatabaseTable.getPorID(db, 0));
 
-               Toast.makeText(getApplication(), "Adicionando nova vacina...", Toast.LENGTH_SHORT).show();
-               finish();
-           }
+                    Toast.makeText(getApplication(), "Adicionando nova vacina...", Toast.LENGTH_SHORT).show();
+                } catch (ParseException pe) {
+                    Toast.makeText(getApplication(), "Falha ao adicionar nova vacina...", Toast.LENGTH_SHORT).show();
+                }
+                finish();
+            }
         });
 
     }

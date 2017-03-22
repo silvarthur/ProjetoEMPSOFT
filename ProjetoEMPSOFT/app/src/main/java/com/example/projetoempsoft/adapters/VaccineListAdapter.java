@@ -1,6 +1,5 @@
 package com.example.projetoempsoft.adapters;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.projetoempsoft.R;
-import com.example.projetoempsoft.models.Vaccine;
+import com.example.projetoempsoft.models.Vacina;
 
 import java.util.List;
 
@@ -20,9 +19,9 @@ public class VaccineListAdapter extends RecyclerView.Adapter<VaccineListAdapter.
 
     //private LayoutInflater inflater;
 
-    List<Vaccine> data;
+    List<Vacina> data;
 
-    public VaccineListAdapter(List<Vaccine> data) {
+    public VaccineListAdapter(List<Vacina> data) {
         //inflater = LayoutInflater.from(context);
         this.data = data;
     }
@@ -38,13 +37,12 @@ public class VaccineListAdapter extends RecyclerView.Adapter<VaccineListAdapter.
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Vaccine current = data.get(position);
-
-        holder.vaccineTypeText.setText(current.getVaccineType());
-        holder.veterinarianText.setText(current.getVeterinarian());
-        holder.date.setText(current.getDate());
-        holder.returnDateText.setText(current.getReturnDate());
-
+        Vacina current = data.get(position);
+        // TODO verificar se quebra com essa mudanca
+        holder.vaccineTypeText.setText(current.getTipoVacina().getNome());
+        holder.veterinarianText.setText(current.getVeterinario().getNome());
+        holder.date.setText(current.getData().toString());
+        holder.returnDateText.setText(current.getDataRetorno().toString());
     }
 
     @Override

@@ -2,8 +2,11 @@ package com.example.projetoempsoft.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +17,9 @@ import android.widget.Button;
 
 import com.example.projetoempsoft.R;
 import com.example.projetoempsoft.adapters.VaccineListAdapter;
-import com.example.projetoempsoft.models.Vaccine;
+import com.example.projetoempsoft.helper.DatabaseHelper;
+import com.example.projetoempsoft.helper.VacinaDatabaseTable;
+import com.example.projetoempsoft.models.Vacina;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,15 +87,21 @@ public class VaccinesFragment extends Fragment {
 
         listOfVaccines = (RecyclerView) view.findViewById(R.id.vaccinesList);
 
-        List<Vaccine> data = new ArrayList<>();
-        Vaccine vaccine1 = new Vaccine("Doença1", "Dr. Goku", "01/01/2016", "02/02/2016");
-        Vaccine vaccine2 = new Vaccine("Doença2", "Dr. Urameshi", "12/01/2016", "12/02/2016");
-        Vaccine vaccine3 = new Vaccine("Doença3", "Dr. Monkey D. Ruffy", "12/01/2016", "12/03/2016");
-        Vaccine vaccine4 = new Vaccine("Doença4", "Dr. Gohan", "13/04/2016", "15/06/2016");
-        data.add(vaccine1);
-        data.add(vaccine2);
-        data.add(vaccine3);
-        data.add(vaccine4);
+        DatabaseHelper mDbHelper = new DatabaseHelper(getContext());
+
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+        // TODO verificar se essa mudanca quebra
+        List<Vacina> data = VacinaDatabaseTable.getTodasVacinas(db);
+//        List<Vacina> data = new ArrayList<>();
+//        Vacina vaccine1 = new Vacina("Doença1", "Dr. Goku", "01/01/2016", "02/02/2016");
+//        Vacina vaccine2 = new Vacina("Doença2", "Dr. Urameshi", "12/01/2016", "12/02/2016");
+//        Vacina vaccine3 = new Vacina("Doença3", "Dr. Monkey D. Ruffy", "12/01/2016", "12/03/2016");
+//        Vacina vaccine4 = new Vacina("Doença4", "Dr. Gohan", "13/04/2016", "15/06/2016");
+//        data.add(vaccine1);
+//        data.add(vaccine2);
+//        data.add(vaccine3);
+//        data.add(vaccine4);
 
         adapter = new VaccineListAdapter(data);
 
