@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Serviços");
+        toolbar.setTitle("SERVIÇOS");
         setSupportActionBar(toolbar);
 
         Fragment fragment = new CompaniesFragment();
@@ -108,16 +108,16 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_add) {
-            toolbar.setTitle("Serviços");
+            toolbar.setTitle("SERVIÇOS");
             fragment = new CompaniesFragment();
         } else if (id == R.id.nav_vaccines) {
-            toolbar.setTitle("Vacinas");
+            toolbar.setTitle("VACINAS");
             fragment = new VaccinesFragment();
         } else if (id == R.id.nav_scheduling) {
-            toolbar.setTitle("Agendamentos");
+            toolbar.setTitle("AGENDAMENTOS");
             fragment = new SchedulesFragment();
         } else if (id == R.id.nav_food) {
-            toolbar.setTitle("Pedir Ração");
+            toolbar.setTitle("PEDIR RAÇÃO");
             fragment = new FoodOrderingFragment();
         } else if (id == R.id.nav_settings) {
 
