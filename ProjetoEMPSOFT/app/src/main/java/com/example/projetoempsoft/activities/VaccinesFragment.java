@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -43,7 +44,7 @@ public class VaccinesFragment extends Fragment {
     //private String mParam1;
     //private String mParam2;
 
-    public Button addNewVaccineButton;
+    public FloatingActionButton addNewVaccineButton;
 
     private RecyclerView listOfVaccines;
     private RecyclerView.Adapter adapter;
@@ -108,7 +109,7 @@ public class VaccinesFragment extends Fragment {
         listOfVaccines.setAdapter(adapter);
         listOfVaccines.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
-        addNewVaccineButton = (Button) view.findViewById(R.id.add_new_vaccine_button);
+        addNewVaccineButton = (FloatingActionButton) view.findViewById(R.id.add_new_vaccine_button);
         addNewVaccineButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

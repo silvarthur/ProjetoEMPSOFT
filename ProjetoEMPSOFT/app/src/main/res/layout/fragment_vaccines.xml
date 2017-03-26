@@ -17,10 +17,12 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/add_new_vaccine_button"
-        android:layout_width="match_parent"
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ADICIONAR NOVA VACINA"/>
+        android:layout_gravity="center_horizontal|bottom"
+        android:src="@drawable/plus_button"
+        android:backgroundTint="@color/primaryColor"
+        android:id="@+id/add_new_vaccine_button"/>
 
 </LinearLayout>

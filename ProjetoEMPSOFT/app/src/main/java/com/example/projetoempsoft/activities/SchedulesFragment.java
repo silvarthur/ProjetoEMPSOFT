@@ -3,6 +3,7 @@ package com.example.projetoempsoft.activities;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -61,7 +62,7 @@ public class SchedulesFragment extends Fragment {
         // Inflate the layout for this fragment
         View myView = inflater.inflate(R.layout.fragment_schedules, container, false);
 
-        Button addScheduleBtn = (Button) myView.findViewById(R.id.newScheduleBtn);
+        FloatingActionButton addScheduleBtn = (FloatingActionButton) myView.findViewById(R.id.newScheduleBtn);
 
         addScheduleBtn.setOnClickListener(new View.OnClickListener() {
             @Override

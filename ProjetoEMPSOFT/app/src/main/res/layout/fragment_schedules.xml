@@ -11,13 +11,12 @@
         android:id="@+id/scheduleListView"
         android:layout_gravity="center_horizontal|top" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
+    <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Novo Agendamento"
-        android:id="@+id/newScheduleBtn"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="20dp" />
+        android:layout_gravity="center_horizontal|bottom"
+        android:src="@drawable/plus_button"
+        android:backgroundTint="@color/primaryColor"
+        android:id="@+id/newScheduleBtn"/>
 
 </FrameLayout>
