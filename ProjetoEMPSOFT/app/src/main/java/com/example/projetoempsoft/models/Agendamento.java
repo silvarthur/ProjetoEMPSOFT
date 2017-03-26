@@ -1,5 +1,7 @@
 package com.example.projetoempsoft.models;
 
+import com.example.projetoempsoft.adapters.ScheduleAdapter;
+
 import java.util.Date;
 
 /**
@@ -10,6 +12,14 @@ public class Agendamento {
     private TipoAgendamento tipoAgendamento;
     private Date data;
     private StatusAgendamento status;
+    private String horaAgendamento;
+
+    public Agendamento(TipoAgendamento tipoAgendamento, Date data, String horaAgendamento, StatusAgendamento status){
+        this.tipoAgendamento = tipoAgendamento;
+        this.data = data;
+        this.horaAgendamento = horaAgendamento;
+        this.status = status;
+    }
 
     public Integer getId() {
         return id;
@@ -33,6 +43,10 @@ public class Agendamento {
 
     public void setData(Date data) {
         this.data = data;
+    }
+
+    public String getHoraAgendamento(){
+        return horaAgendamento;
     }
 
     public StatusAgendamento getStatus() {

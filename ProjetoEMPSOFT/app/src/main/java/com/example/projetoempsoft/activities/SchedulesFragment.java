@@ -1,20 +1,28 @@
 package com.example.projetoempsoft.activities;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
 
 import com.example.projetoempsoft.R;
+import com.example.projetoempsoft.adapters.ScheduleAdapter;
+import com.example.projetoempsoft.models.Agendamento;
+import com.example.projetoempsoft.models.StatusAgendamento;
+import com.example.projetoempsoft.models.TipoAgendamento;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -27,7 +35,8 @@ import com.example.projetoempsoft.R;
  */
 public class SchedulesFragment extends Fragment {
 
-
+    private ScheduleAdapter adapter;
+    private RecyclerView recScheduleList;
     private OnFragmentInteractionListener mListener;
 
     public SchedulesFragment() {
@@ -75,12 +84,18 @@ public class SchedulesFragment extends Fragment {
                 fragmentTransaction.commit();
             }
         });
-        String[] mobileArray = {"Consulta 1","Consulta 2","Banho e Tosa 1","Banho 1",
-                "Tosa 1","Banho 2","Tosa 2"};
 
-        ArrayAdapter adapter = new ArrayAdapter<String>(getContext(), R.layout.schedule_list_item, mobileArray);
-        ListView listView = (ListView) myView.findViewById(R.id.scheduleListView);
-        listView.setAdapter(adapter);
+        recScheduleList = (RecyclerView) myView.findViewById(R.id.scheduleListView);
+
+        List<Agendamento> AgList = new ArrayList<Agendamento>();
+        AgList.add(new Agendamento(TipoAgendamento.BANHO, new Date(), "15:00", StatusAgendamento.EM_ANDAMENTO));
+        AgList.add(new Agendamento(TipoAgendamento.BANHO_E_TOSA, new Date(), "15:00", StatusAgendamento.AGENDADO));
+
+
+        adapter = new ScheduleAdapter(AgList);
+
+        recScheduleList.setAdapter(adapter);
+        recScheduleList.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
         return myView;
     }
