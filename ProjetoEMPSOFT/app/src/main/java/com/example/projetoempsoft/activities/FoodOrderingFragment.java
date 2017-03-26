@@ -54,19 +54,19 @@ public class FoodOrderingFragment extends Fragment {
                              Bundle savedInstanceState) {
         View myView = inflater.inflate(R.layout.fragment_food_ordering, container, false);
 
-        Button comprarBtn = (Button) myView.findViewById(R.id.button);
-
-        comprarBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Fragment fragment = new FoodDetailsFragment();
-                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.content_main, fragment);
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
-                }
-        });
+//        Button comprarBtn = (Button) myView.findViewById(R.id.button);
+//
+//        comprarBtn.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Fragment fragment = new FoodDetailsFragment();
+//                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                    fragmentTransaction.replace(R.id.content_main, fragment);
+//                    fragmentTransaction.addToBackStack(null);
+//                    fragmentTransaction.commit();
+//                }
+//        });
 
         return myView;
     }
