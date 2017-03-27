@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Whiskas"
-        android:id="@+id/textView3"
+        android:id="@+id/itemTitle"
         android:textSize="50dp"
         android:layout_gravity="center_horizontal" />
 
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Whiskas, ração para gatos."
-        android:id="@+id/textView4"
+        android:id="@+id/itemDesc"
         android:layout_gravity="center_horizontal" />
 
     <EditText
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:inputType="number"
         android:ems="10"
-        android:id="@+id/editText"
+        android:id="@+id/itemQtd"
         android:hint="Quantidade"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp" />
@@ -44,17 +44,18 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Valor Total: R$15,00"
-        android:id="@+id/textView5"
+        android:id="@+id/itemValue"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dp" />
 
     <Button
+        android:id="@+id/button3"
         android:layout_width="152dp"
         android:layout_height="wrap_content"
-        android:text="Finalizar Pedido"
-        android:id="@+id/button3"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
-        android:background="#f95808" />
+        android:background="@color/colorPrimary"
+        android:textColor="@color/white"
+        android:text="Finalizar Pedido" />
 
 </LinearLayout>
