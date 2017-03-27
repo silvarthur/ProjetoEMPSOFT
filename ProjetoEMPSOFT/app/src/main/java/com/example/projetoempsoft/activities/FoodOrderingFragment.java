@@ -6,12 +6,20 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.projetoempsoft.R;
+import com.example.projetoempsoft.adapters.ShoppingListAdapter;
+import com.example.projetoempsoft.models.Item;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -24,6 +32,8 @@ import com.example.projetoempsoft.R;
  */
 public class FoodOrderingFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
+    private RecyclerView itemsListView;
+    private ShoppingListAdapter adapter;
 
     public FoodOrderingFragment() {
         // Required empty public constructor
@@ -53,20 +63,20 @@ public class FoodOrderingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View myView = inflater.inflate(R.layout.fragment_food_ordering, container, false);
+        itemsListView = (RecyclerView) myView.findViewById(R.id.shoppingList);
 
-//        Button comprarBtn = (Button) myView.findViewById(R.id.button);
-//
-//        comprarBtn.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Fragment fragment = new FoodDetailsFragment();
-//                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                    fragmentTransaction.replace(R.id.content_main, fragment);
-//                    fragmentTransaction.addToBackStack(null);
-//                    fragmentTransaction.commit();
-//                }
-//        });
+        Item item1 = new Item("Whiskas 300g", "Raçao para gatos", 15.00d);
+        Item item2 = new Item("Pedigree", "Raçao para caes e gatos", 15.00d);
+        Item item3 = new Item("Whiskas 800g", "Raçao para gatos", 20.00d);
+
+        List<Item> list = new ArrayList<Item>();
+        list.add(item1);
+        list.add(item2);
+        list.add(item3);
+
+        adapter = new ShoppingListAdapter(list);
+        itemsListView.setAdapter(adapter);
+        itemsListView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
         return myView;
     }
