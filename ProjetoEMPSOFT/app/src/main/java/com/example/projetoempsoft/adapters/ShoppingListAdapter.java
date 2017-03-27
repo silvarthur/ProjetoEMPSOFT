@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,6 +47,18 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
         Item current = listOfItems.get(position);
         holder.itemPrice.setText("R$ " + current.getItemPrice());
         holder.itemTitle.setText(current.getItemTitle());
+
+        holder.cv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new FoodDetailsFragment();
+                FragmentManager fragmentManager = parentActivity.getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.content_main, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
     }
 
     @Override
@@ -57,23 +70,13 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
 
         private TextView itemPrice;
         private TextView itemTitle;
+        private CardView cv;
 
         public ViewHolder(final View itemView) {
             super(itemView);
             itemPrice = (TextView) itemView.findViewById(R.id.card_itemPrice);
             itemTitle = (TextView) itemView.findViewById(R.id.card_itemTitle);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Fragment fragment = new FoodDetailsFragment();
-                    FragmentManager fragmentManager = parentActivity.getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.content_main, fragment);
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
-                }
-            });
+            cv = (CardView) itemView.findViewById(R.id.shoppingListCard);
         }
 
     }
