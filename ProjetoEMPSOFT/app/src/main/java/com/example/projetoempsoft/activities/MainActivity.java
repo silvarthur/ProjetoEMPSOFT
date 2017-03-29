@@ -18,7 +18,6 @@ import android.view.MenuItem;
 import com.example.projetoempsoft.R;
 import com.example.projetoempsoft.adapters.PetShopListAdapter;
 import com.example.projetoempsoft.adapters.VeterinarianListAdapter;
-import com.example.projetoempsoft.models.Endereco;
 import com.example.projetoempsoft.models.PetShop;
 import com.example.projetoempsoft.models.Veterinario;
 

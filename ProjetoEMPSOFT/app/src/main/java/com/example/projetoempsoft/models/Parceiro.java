@@ -1,33 +1,26 @@
 package com.example.projetoempsoft.models;
 
 /**
- * Created by lucasfnf on 20/03/17.
+ * Created by lucasfnf on 27/03/17.
  */
-public class Endereco {
-    private Integer id;
+
+abstract class Parceiro {
     private String rua;
     private String cidade;
     private String estado;
     private String complemento;
     private String numero;
     private String cep;
+    private String telefone;
 
-    public Endereco(Integer id, String rua, String cidade, String estado, String complemento, String numero, String cep) {
-        this.id = id;
+    Parceiro(String rua, String cidade, String estado, String complemento, String numero, String cep, String telefone) {
         this.rua = rua;
         this.cidade = cidade;
         this.estado = estado;
         this.complemento = complemento;
         this.numero = numero;
         this.cep = cep;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+        this.telefone = telefone;
     }
 
     public String getRua() {
@@ -78,36 +71,44 @@ public class Endereco {
         this.cep = cep;
     }
 
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Endereco endereco = (Endereco) o;
+        Parceiro parceiro = (Parceiro) o;
 
-        if (id != null ? !id.equals(endereco.id) : endereco.id != null) return false;
-        if (rua != null ? !rua.equals(endereco.rua) : endereco.rua != null) return false;
-        if (cidade != null ? !cidade.equals(endereco.cidade) : endereco.cidade != null)
+        if (rua != null ? !rua.equals(parceiro.rua) : parceiro.rua != null) return false;
+        if (cidade != null ? !cidade.equals(parceiro.cidade) : parceiro.cidade != null)
             return false;
-        if (estado != null ? !estado.equals(endereco.estado) : endereco.estado != null)
+        if (estado != null ? !estado.equals(parceiro.estado) : parceiro.estado != null)
             return false;
-        if (complemento != null ? !complemento.equals(endereco.complemento) : endereco.complemento != null)
+        if (complemento != null ? !complemento.equals(parceiro.complemento) : parceiro.complemento != null)
             return false;
-        if (numero != null ? !numero.equals(endereco.numero) : endereco.numero != null)
+        if (numero != null ? !numero.equals(parceiro.numero) : parceiro.numero != null)
             return false;
-        return cep != null ? cep.equals(endereco.cep) : endereco.cep == null;
+        if (cep != null ? !cep.equals(parceiro.cep) : parceiro.cep != null) return false;
+        return telefone != null ? telefone.equals(parceiro.telefone) : parceiro.telefone == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (rua != null ? rua.hashCode() : 0);
+        int result = rua != null ? rua.hashCode() : 0;
         result = 31 * result + (cidade != null ? cidade.hashCode() : 0);
         result = 31 * result + (estado != null ? estado.hashCode() : 0);
         result = 31 * result + (complemento != null ? complemento.hashCode() : 0);
         result = 31 * result + (numero != null ? numero.hashCode() : 0);
         result = 31 * result + (cep != null ? cep.hashCode() : 0);
+        result = 31 * result + (telefone != null ? telefone.hashCode() : 0);
         return result;
     }
 }

@@ -1,6 +1,7 @@
 package com.example.projetoempsoft.activities;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,7 +14,9 @@ import android.view.ViewGroup;
 import com.example.projetoempsoft.R;
 import com.example.projetoempsoft.adapters.PetShopListAdapter;
 import com.example.projetoempsoft.adapters.VeterinarianListAdapter;
-import com.example.projetoempsoft.models.Endereco;
+import com.example.projetoempsoft.helper.DatabaseHelper;
+import com.example.projetoempsoft.helper.PetShopDatabaseTable;
+import com.example.projetoempsoft.helper.VeterinarioDatabaseTable;
 import com.example.projetoempsoft.models.PetShop;
 import com.example.projetoempsoft.models.Veterinario;
 
@@ -102,52 +105,21 @@ public class CompaniesFragment extends Fragment {
     }
 
     public List<PetShop> getListPetShops() {
+        DatabaseHelper dbHelper = new DatabaseHelper(getContext());
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        List<PetShop> listOfPetShops = new ArrayList<>();
-
-        Endereco endereco1 = new Endereco(1, "Rua 10", "Campina Grande", "PB", "Nenhum", "159", "11111-111");
-        Endereco endereco2 = new Endereco(1, "Rua 11", "Campina Grande", "PB", "Nenhum", "160", "90189-456");
-        Endereco endereco3 = new Endereco(1, "Rua 12", "Campina Grande", "PB", "Nenhum", "161", "12900-888");
-
-        PetShop petShop1 = new PetShop();
-        petShop1.setNome("Casa do Animal");
-        petShop1.setEndereco(endereco1);
-
-        PetShop petShop2 = new PetShop();
-        petShop2.setNome("Mundo Animal");
-        petShop2.setEndereco(endereco2);
-
-        PetShop petShop3 = new PetShop();
-        petShop3.setNome("CG Animal Shop");
-        petShop3.setEndereco(endereco3);
-
-        listOfPetShops.add(petShop1);
-        listOfPetShops.add(petShop2);
-        listOfPetShops.add(petShop3);
+        List<PetShop> listOfPetShops = PetShopDatabaseTable.getTodosPetShops(db);
 
         return listOfPetShops;
-
     }
 
     public List<Veterinario> getListVeterinarians() {
+        DatabaseHelper dbHelper = new DatabaseHelper(getContext());
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        List<Veterinario> listOfVeterinarians = new ArrayList<>();
-
-        Endereco endereco1 = new Endereco(2, "Rua 16", "Campina Grande", "PB", "Nenhum", "222", "12345-678");
-        Veterinario veterinario1 = new Veterinario(2, "Clínica do Animal", endereco1);
-
-        Endereco endereco2 = new Endereco(3, "Rua 17", "Campina Grande", "PB", "Nenhum", "222", "99999-678");
-        Veterinario veterinario2 = new Veterinario(2, "Clínica do Animal", endereco2);
-
-        //Endereco endereco3 = new Endereco(4, "Rua 18", "Campina Grande", "PB", "Nenhum", "222", "10101-890");
-        //Veterinario veterinario3 = new Veterinario(2, "Clínica do Animal", endereco3);
-
-        listOfVeterinarians.add(veterinario1);
-        //listOfVeterinarians.add(veterinario2);
-        //listOfVeterinarians.add(veterinario3);
+        List<Veterinario> listOfVeterinarians = VeterinarioDatabaseTable.getTodosVeterinario(db);
 
         return listOfVeterinarians;
-
     }
 
     // TODO: Rename method, update argument and hook method into UI event

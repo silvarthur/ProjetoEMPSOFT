@@ -87,20 +87,9 @@ public class VaccinesFragment extends Fragment {
         listOfVaccines = (RecyclerView) view.findViewById(R.id.vaccinesList);
 
         DatabaseHelper mDbHelper = new DatabaseHelper(getContext());
-
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
-
-        // TODO verificar se essa mudanca quebra
-        List<Vacina> data = VacinaDatabaseTable.getTodasVacinas(db);
-//        List<Vacina> data = new ArrayList<>();
-//        Vacina vaccine1 = new Vacina("Doença1", "Dr. Goku", "01/01/2016", "02/02/2016");
-//        Vacina vaccine2 = new Vacina("Doença2", "Dr. Urameshi", "12/01/2016", "12/02/2016");
-//        Vacina vaccine3 = new Vacina("Doença3", "Dr. Monkey D. Ruffy", "12/01/2016", "12/03/2016");
-//        Vacina vaccine4 = new Vacina("Doença4", "Dr. Gohan", "13/04/2016", "15/06/2016");
-//        data.add(vaccine1);
-//        data.add(vaccine2);
-//        data.add(vaccine3);
-//        data.add(vaccine4);
+        // TODO nesse ponto é necessario ter um Pet na memoria para passar o id como parametro
+        List<Vacina> data = VacinaDatabaseTable.getVacinasPet(db, 0);
 
         adapter = new VaccineListAdapter(data);
 
@@ -157,4 +146,5 @@ public class VaccinesFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
 }

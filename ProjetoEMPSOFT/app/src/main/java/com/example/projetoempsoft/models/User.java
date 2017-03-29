@@ -1,15 +1,19 @@
 package com.example.projetoempsoft.models;
 
-import java.util.List;
-
 /**
  * Created by lucasfnf on 20/03/17.
  */
-public class User {
+public class User extends Parceiro {
     private Integer id;
     private String nome;
-    private List<Pets> petsList;
-    private Endereco endereco;
+    private String email;
+
+    public User(Integer id, String nome, String email, String telefone, String rua, String cidade, String estado, String complemento, String numero, String cep) {
+        super(rua, cidade, estado, complemento, numero, cep, telefone);
+        this.id = id;
+        this.nome = nome;
+        this.email = email;
+    }
 
     public Integer getId() {
         return id;
@@ -27,39 +31,34 @@ public class User {
         this.nome = nome;
     }
 
-    public List<Pets> getPetsList() {
-        return petsList;
+    public String getEmail() {
+        return email;
     }
 
-    public void setPetsList(List<Pets> petsList) {
-        this.petsList = petsList;
-    }
-
-    public Endereco getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
 
         User user = (User) o;
 
-        if (!id.equals(user.id)) return false;
-        if (!nome.equals(user.nome)) return false;
-        return petsList.equals(user.petsList);
+        if (id != null ? !id.equals(user.id) : user.id != null) return false;
+        if (nome != null ? !nome.equals(user.nome) : user.nome != null) return false;
+        return email != null ? email.equals(user.email) : user.email == null;
+
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + nome.hashCode();
-        result = 31 * result + petsList.hashCode();
+        int result = super.hashCode();
+        result = 31 * result + (id != null ? id.hashCode() : 0);
+        result = 31 * result + (nome != null ? nome.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
         return result;
     }
 }

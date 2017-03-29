@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 
 import com.example.projetoempsoft.R;
 import com.example.projetoempsoft.adapters.ScheduleAdapter;
+import com.example.projetoempsoft.helper.AgendamentoDatabaseTable;
+import com.example.projetoempsoft.helper.DatabaseHelper;
 import com.example.projetoempsoft.models.Agendamento;
 import com.example.projetoempsoft.models.StatusAgendamento;
 import com.example.projetoempsoft.models.TipoAgendamento;
@@ -87,10 +89,10 @@ public class SchedulesFragment extends Fragment {
 
         recScheduleList = (RecyclerView) myView.findViewById(R.id.scheduleListView);
 
-        List<Agendamento> AgList = new ArrayList<Agendamento>();
-        AgList.add(new Agendamento(TipoAgendamento.BANHO, new Date(), "15:00", StatusAgendamento.EM_ANDAMENTO));
-        AgList.add(new Agendamento(TipoAgendamento.BANHO_E_TOSA, new Date(), "15:00", StatusAgendamento.AGENDADO));
-
+        DatabaseHelper dbHelper = new DatabaseHelper(getContext());
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        // TODO nesse ponto é necessario ter um User em memoria para passar o ID para o metodo
+        List<Agendamento> AgList = AgendamentoDatabaseTable.getAgendamentosPorUsuario(db, 0);
 
         adapter = new ScheduleAdapter(AgList);
 

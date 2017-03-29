@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
-import android.provider.Settings;
 import android.util.Log;
 
 import com.example.projetoempsoft.models.TipoVacina;
@@ -17,18 +16,19 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Logger;
 
 /**
  * Created by lucasfnf on 21/03/17.
  */
 
 public final class VacinaDatabaseTable implements BaseColumns {
-    public static final String TABLE_NAME = "vacina";
-    public static final String COLUMN_NAME_TIPO_VACINA = "tipo_vacina";
-    public static final String COLUMN_NAME_DATA = "data";
-    public static final String COLUMN_NAME_DATA_RETORNO = "data_retorno";
-    public static final String COLUMN_NAME_VETERINARIO = "veterinario";
+    static final String TABLE_NAME = "vacina";
+    static final String COLUMN_NAME_PET = "pet";
+    static final String COLUMN_NAME_TIPO_VACINA = "tipo_vacina";
+    static final String COLUMN_NAME_DATA = "data";
+    static final String COLUMN_NAME_DATA_RETORNO = "data_retorno";
+    static final String COLUMN_NAME_VETERINARIO = "veterinario";
+
     private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     private VacinaDatabaseTable() { }
@@ -43,15 +43,17 @@ public final class VacinaDatabaseTable implements BaseColumns {
         return formater.format(date);
     }
 
-    public static void createTable(SQLiteDatabase db) {
+    static void createTable(SQLiteDatabase db) {
         String SQL_CREATE_VACINA =
                 "CREATE TABLE " + TABLE_NAME + " (" +
                         _ID + " INTEGER NOT NULL," +
+                        COLUMN_NAME_PET + " INTEGER NOT NULL," +
                         COLUMN_NAME_TIPO_VACINA + " INTEGER NOT NULL," +
                         COLUMN_NAME_DATA + " DATETIME NOT NULL," +
                         COLUMN_NAME_DATA_RETORNO + " DATETIME," +
                         COLUMN_NAME_VETERINARIO + " INTEGER NOT NULL," +
                         "CONSTRAINT PK_Tipo_Vacina PRIMARY KEY ("+_ID+")," +
+                        "CONSTRAINT FK_Vacina_Tipo_Vacina FOREIGN KEY ("+COLUMN_NAME_PET+") REFERENCES "+PetsDatabaseTable.TABLE_NAME+"("+PetsDatabaseTable._ID+")" +
                         "CONSTRAINT FK_Vacina_Tipo_Vacina FOREIGN KEY ("+COLUMN_NAME_TIPO_VACINA+") REFERENCES "+TipoVacinaDatabaseTable.TABLE_NAME+"("+TipoVacinaDatabaseTable._ID+")" +
                         "CONSTRAINT FK_Vacina_Veterinario FOREIGN KEY ("+COLUMN_NAME_VETERINARIO+") REFERENCES "+VeterinarioDatabaseTable.TABLE_NAME+"("+VeterinarioDatabaseTable._ID+"))";
         db.execSQL(SQL_CREATE_VACINA);
@@ -60,6 +62,7 @@ public final class VacinaDatabaseTable implements BaseColumns {
         ContentValues values;
         values = new ContentValues();
         values.put(_ID, 0);
+        values.put(COLUMN_NAME_PET, 0);
         values.put(COLUMN_NAME_TIPO_VACINA, 0);
         values.put(COLUMN_NAME_DATA, "2017-01-01 00:00:00");
         values.put(COLUMN_NAME_DATA_RETORNO, "2017-02-02 00:00:00");
@@ -68,6 +71,7 @@ public final class VacinaDatabaseTable implements BaseColumns {
 
         values = new ContentValues();
         values.put(_ID, 1);
+        values.put(COLUMN_NAME_PET, 0);
         values.put(COLUMN_NAME_TIPO_VACINA, 1);
         values.put(COLUMN_NAME_DATA, "2017-01-12 00:00:00");
         values.put(COLUMN_NAME_DATA_RETORNO, "2017-02-12 00:00:00");
@@ -76,6 +80,7 @@ public final class VacinaDatabaseTable implements BaseColumns {
 
         values = new ContentValues();
         values.put(_ID, 2);
+        values.put(COLUMN_NAME_PET, 0);
         values.put(COLUMN_NAME_TIPO_VACINA, 2);
         values.put(COLUMN_NAME_DATA, "2017-01-12 00:00:00");
         values.put(COLUMN_NAME_DATA_RETORNO, "2017-03-12 00:00:00");
@@ -84,6 +89,7 @@ public final class VacinaDatabaseTable implements BaseColumns {
 
         values = new ContentValues();
         values.put(_ID, 3);
+        values.put(COLUMN_NAME_PET, 0);
         values.put(COLUMN_NAME_TIPO_VACINA, 3);
         values.put(COLUMN_NAME_DATA, "2017-04-13 00:00:00");
         values.put(COLUMN_NAME_DATA_RETORNO, "2017-06-15 00:00:00");
@@ -93,11 +99,11 @@ public final class VacinaDatabaseTable implements BaseColumns {
 
     public static Vacina getPorId(SQLiteDatabase db, Integer id) {
         String[] projection = {
-                VacinaDatabaseTable._ID,
-                VacinaDatabaseTable.COLUMN_NAME_TIPO_VACINA,
-                VacinaDatabaseTable.COLUMN_NAME_DATA,
-                VacinaDatabaseTable.COLUMN_NAME_DATA_RETORNO,
-                VacinaDatabaseTable.COLUMN_NAME_VETERINARIO
+                _ID,
+                COLUMN_NAME_TIPO_VACINA,
+                COLUMN_NAME_DATA,
+                COLUMN_NAME_DATA_RETORNO,
+                COLUMN_NAME_VETERINARIO
         };
 
         String selection = _ID + " = ?";
@@ -114,6 +120,7 @@ public final class VacinaDatabaseTable implements BaseColumns {
         );
         Vacina vacina = null;
         if (cursor.getCount() != 0)
+            cursor.moveToNext();
             vacina = converteResultado(db, cursor);
         cursor.close();
         return vacina;
@@ -121,15 +128,64 @@ public final class VacinaDatabaseTable implements BaseColumns {
 
     public static List<Vacina> getTodasVacinas(SQLiteDatabase db) {
         Cursor cursor = db.rawQuery("select * from "+TABLE_NAME,null);
-        Log.d("READ", "Foram lidas "+Integer.toString(cursor.getCount())+" linhas");
+        Log.d("READ", "Foram lidas "+Integer.toString(cursor.getCount())+" linhas da tabela "+TABLE_NAME);
 
-        List items = new ArrayList<>();
+        List<Vacina> items = new ArrayList<>();
         while(cursor.moveToNext()) {
             Log.d("READ", "Foi lido uma linha do banco de dados");
             items.add(converteResultado(db, cursor));
         }
         cursor.close();
         return items;
+    }
+
+    public static List<Vacina> getVacinasPet(SQLiteDatabase db, Integer id) {
+        String[] projection = {
+                _ID,
+                COLUMN_NAME_TIPO_VACINA,
+                COLUMN_NAME_DATA,
+                COLUMN_NAME_DATA_RETORNO,
+                COLUMN_NAME_VETERINARIO
+        };
+
+        String selection = COLUMN_NAME_PET + " = ?";
+        String[] selectionArgs = { id.toString() };
+
+        Cursor cursor = db.query(
+                TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        List<Vacina> items = new ArrayList<>();
+        while(cursor.moveToNext()) {
+            Log.d("READ", "Foi lido uma linha do banco de dados");
+            items.add(converteResultado(db, cursor));
+        }
+        cursor.close();
+        return items;
+    }
+
+    public static void saveVacina(SQLiteDatabase db, Vacina vacina, Integer petID) {
+        Cursor cursor = db.rawQuery("select * from "+TABLE_NAME,null);
+        Integer max = 0;
+        while (cursor.moveToNext()) {
+            Integer i = cursor.getInt(cursor.getColumnIndexOrThrow(_ID));
+            if (i > max) max = i;
+        }
+        cursor.close();
+        ContentValues values = new ContentValues();
+        values.put(_ID, max + 1);
+        values.put(COLUMN_NAME_TIPO_VACINA, vacina.getTipoVacina().getId());
+        values.put(COLUMN_NAME_PET, petID);
+        values.put(COLUMN_NAME_DATA, dateToString(vacina.getData()));
+        values.put(COLUMN_NAME_DATA_RETORNO, dateToString(vacina.getDataRetorno()));
+        values.put(COLUMN_NAME_VETERINARIO, vacina.getVeterinario().getId());
+        db.insert(TABLE_NAME, null, values);
     }
 
     private static Vacina converteResultado(SQLiteDatabase db, Cursor cursor) {
@@ -148,8 +204,11 @@ public final class VacinaDatabaseTable implements BaseColumns {
         } catch (ParseException pe) {
             data_retorno = new Date();
         }
-        Veterinario veterinario = VeterinarioDatabaseTable.getPorID(db,
-                cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_NAME_VETERINARIO)));
-        return new Vacina(id, tipoVacina, data, data_retorno, veterinario);
+        Integer veterinarioID = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_NAME_VETERINARIO));
+        Veterinario veterinario = VeterinarioDatabaseTable.getPorID(db, veterinarioID);
+        if (veterinario == null) {
+            Log.d("NULL", "Veterinario retornou com valor nulo (ID "+veterinarioID.toString()+")");
+        }
+        return new Vacina(id, null, tipoVacina, data, data_retorno, veterinario);
     }
 }

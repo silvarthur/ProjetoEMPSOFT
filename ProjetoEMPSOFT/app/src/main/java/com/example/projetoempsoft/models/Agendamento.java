@@ -9,15 +9,16 @@ import java.util.Date;
  */
 public class Agendamento {
     private Integer id;
+    private User user;
     private TipoAgendamento tipoAgendamento;
     private Date data;
     private StatusAgendamento status;
-    private String horaAgendamento;
 
-    public Agendamento(TipoAgendamento tipoAgendamento, Date data, String horaAgendamento, StatusAgendamento status){
+    public Agendamento(Integer id, User user, TipoAgendamento tipoAgendamento, Date data, StatusAgendamento status) {
+        this.id = id;
+        this.user = user;
         this.tipoAgendamento = tipoAgendamento;
         this.data = data;
-        this.horaAgendamento = horaAgendamento;
         this.status = status;
     }
 
@@ -27,6 +28,14 @@ public class Agendamento {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public TipoAgendamento getTipoAgendamento() {
@@ -45,10 +54,6 @@ public class Agendamento {
         this.data = data;
     }
 
-    public String getHoraAgendamento(){
-        return horaAgendamento;
-    }
-
     public StatusAgendamento getStatus() {
         return status;
     }
@@ -65,14 +70,17 @@ public class Agendamento {
         Agendamento that = (Agendamento) o;
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (user != null ? !user.equals(that.user) : that.user != null) return false;
         if (tipoAgendamento != that.tipoAgendamento) return false;
         if (data != null ? !data.equals(that.data) : that.data != null) return false;
-        return status != null ? status.equals(that.status) : that.status == null;
+        return status == that.status;
+
     }
 
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (user != null ? user.hashCode() : 0);
         result = 31 * result + (tipoAgendamento != null ? tipoAgendamento.hashCode() : 0);
         result = 31 * result + (data != null ? data.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);

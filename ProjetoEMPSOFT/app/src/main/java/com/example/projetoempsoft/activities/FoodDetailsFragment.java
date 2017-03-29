@@ -1,8 +1,10 @@
 package com.example.projetoempsoft.activities;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,6 +15,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.projetoempsoft.R;
+import com.example.projetoempsoft.helper.DatabaseHelper;
+import com.example.projetoempsoft.helper.ItemDatabaseHelper;
 import com.example.projetoempsoft.models.Item;
 
 /**
@@ -57,7 +61,11 @@ public class FoodDetailsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final Item item = new Item("Whiskas 300g", "Ração para gatos cheio de nutrientes que vão fazer o monstro sair da jaula", 15.00d);
+        DatabaseHelper dbHelper = new DatabaseHelper(getContext());
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        // TODO porque aqui o item é constante?
+        final Item item = ItemDatabaseHelper.getPorId(db, 0);
+
         View myView = inflater.inflate(R.layout.fragment_food_details, container, false);
         TextView itemTitle = (TextView) myView.findViewById(R.id.itemTitle);
         TextView itemDesc = (TextView) myView.findViewById(R.id.itemDesc);
@@ -73,7 +81,7 @@ public class FoodDetailsFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(!itemQtd.getText().toString().equals("")){
-                    itemPrice.setText("R$ " + item.getItemPrice() * Integer.parseInt(itemQtd.getText().toString()) );
+                    itemPrice.setText("R$ " + item.getPreco() * Integer.parseInt(itemQtd.getText().toString()) );
                 }
             }
 
@@ -83,9 +91,9 @@ public class FoodDetailsFragment extends Fragment {
             }
         });
 
-        itemDesc.setText(item.getItemDescription());
-        itemTitle.setText(item.getItemTitle());
-        itemPrice.setText("R$ " + item.getItemPrice().toString());
+        itemDesc.setText(item.getDescricao());
+        itemTitle.setText(item.getTitulo());
+        itemPrice.setText("R$ " + item.getPreco().toString());
 
         return myView;
     }

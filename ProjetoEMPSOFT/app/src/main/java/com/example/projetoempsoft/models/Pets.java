@@ -8,7 +8,13 @@ import java.util.List;
 public class Pets {
     private Integer id;
     private String nome;
-    private List<Vacina> vacinaList;
+    private User dono;
+
+    public Pets(Integer id, String nome, User dono) {
+        this.id = id;
+        this.nome = nome;
+        this.dono = dono;
+    }
 
     public Integer getId() {
         return id;
@@ -26,12 +32,12 @@ public class Pets {
         this.nome = nome;
     }
 
-    public List<Vacina> getVacinaList() {
-        return vacinaList;
+    public User getDono() {
+        return dono;
     }
 
-    public void setVacinaList(List<Vacina> vacinaList) {
-        this.vacinaList = vacinaList;
+    public void setDono(User dono) {
+        this.dono = dono;
     }
 
     @Override
@@ -41,16 +47,17 @@ public class Pets {
 
         Pets pets = (Pets) o;
 
-        if (!id.equals(pets.id)) return false;
-        if (!nome.equals(pets.nome)) return false;
-        return vacinaList.equals(pets.vacinaList);
+        if (id != null ? !id.equals(pets.id) : pets.id != null) return false;
+        if (nome != null ? !nome.equals(pets.nome) : pets.nome != null) return false;
+        return dono != null ? dono.equals(pets.dono) : pets.dono == null;
+
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + nome.hashCode();
-        result = 31 * result + vacinaList.hashCode();
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (nome != null ? nome.hashCode() : 0);
+        result = 31 * result + (dono != null ? dono.hashCode() : 0);
         return result;
     }
 }

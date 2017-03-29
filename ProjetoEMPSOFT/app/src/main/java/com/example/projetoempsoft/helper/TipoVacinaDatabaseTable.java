@@ -4,21 +4,25 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
+import android.util.Log;
 
 import com.example.projetoempsoft.models.TipoVacina;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by lucasfnf on 21/03/17.
  */
 
 public final class TipoVacinaDatabaseTable implements BaseColumns {
-    public static final String TABLE_NAME = "tipo_vacina";
-    public static final String COLUMN_NAME_NOME = "nome";
-    public static final String COLUMN_NAME_DESCRICAO = "descricao";
+    static final String TABLE_NAME = "tipo_vacina";
+    static final String COLUMN_NAME_NOME = "nome";
+    static final String COLUMN_NAME_DESCRICAO = "descricao";
 
     private TipoVacinaDatabaseTable() { }
 
-    public static void createTable(SQLiteDatabase db) {
+    static void createTable(SQLiteDatabase db) {
         String SQL_CREATE_TIPO_VACINA =
                 "CREATE TABLE " + TABLE_NAME + "(" +
                         _ID + " INTEGER NOT NULL," +
@@ -64,6 +68,20 @@ public final class TipoVacinaDatabaseTable implements BaseColumns {
         }
         cursor.close();
         return tipoVacina;
+    }
+
+
+    public static List<TipoVacina> getTodosTipoVacinas(SQLiteDatabase db) {
+        Cursor cursor = db.rawQuery("select * from "+TABLE_NAME,null);
+        Log.d("READ", "Foram lidas "+Integer.toString(cursor.getCount())+" linhas da tabela "+TABLE_NAME);
+
+        List<TipoVacina> items = new ArrayList<>();
+        while(cursor.moveToNext()) {
+            Log.d("READ", "Foi lido uma linha do banco de dados");
+            items.add(converteResultado(db, cursor));
+        }
+        cursor.close();
+        return items;
     }
 
     private static TipoVacina converteResultado(SQLiteDatabase db, Cursor cursor) {

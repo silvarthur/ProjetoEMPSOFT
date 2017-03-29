@@ -45,8 +45,8 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
     @Override
     public void onBindViewHolder(ShoppingListAdapter.ViewHolder holder, int position) {
         Item current = listOfItems.get(position);
-        holder.itemPrice.setText("R$ " + current.getItemPrice());
-        holder.itemTitle.setText(current.getItemTitle());
+        holder.itemPrice.setText("R$ " + current.getPreco());
+        holder.itemTitle.setText(current.getTitulo());
 
         holder.cv.setOnClickListener(new View.OnClickListener() {
             @Override

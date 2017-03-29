@@ -12,6 +12,7 @@ import com.example.projetoempsoft.models.Agendamento;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by nathan on 3/26/17.
@@ -39,8 +40,9 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         holder.scheduleType.setText(current.getTipoAgendamento().toString());
         holder.scheduleStatus.setText(current.getStatus().toString());
         SimpleDateFormat sf = new SimpleDateFormat("dd/MM");
-        holder.scheduleDate.setText(sf.format(current.getData()).toString());
-        holder.scheduleHour.setText("[" + current.getHoraAgendamento() + "]");
+        SimpleDateFormat sfh = new SimpleDateFormat("hh:mm aa");
+        holder.scheduleDate.setText(sf.format(current.getData()));
+        holder.scheduleHour.setText("[" + sfh.format(current.getData()) + "]");
     }
 
     @Override

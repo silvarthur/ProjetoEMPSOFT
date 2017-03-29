@@ -13,7 +13,9 @@ import android.widget.Toast;
 
 import com.example.projetoempsoft.R;
 import com.example.projetoempsoft.helper.DatabaseHelper;
+import com.example.projetoempsoft.helper.PetsDatabaseTable;
 import com.example.projetoempsoft.helper.TipoVacinaDatabaseTable;
+import com.example.projetoempsoft.helper.VacinaDatabaseTable;
 import com.example.projetoempsoft.helper.VeterinarioDatabaseTable;
 import com.example.projetoempsoft.models.Vacina;
 import com.example.projetoempsoft.models.Veterinario;
@@ -67,15 +69,21 @@ public class NewVaccineActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 DatabaseHelper mDbHelper = new DatabaseHelper(getApplicationContext());
-                SQLiteDatabase db = mDbHelper.getReadableDatabase();
+                SQLiteDatabase dbr = mDbHelper.getReadableDatabase();
+                SQLiteDatabase dbw = mDbHelper.getReadableDatabase();
 
                 DateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
                 Vacina vacina = null;
                 try {
-                    vacina = new Vacina(TipoVacinaDatabaseTable.getPorID(db, 0),
+                    // TODO nesse ponto precisa haver um Pet em memoria para passar para o construtor de Vacina
+                    vacina = new Vacina(
+                            0,
+                            PetsDatabaseTable.getPorId(dbr, 0),
+                            TipoVacinaDatabaseTable.getPorID(dbr, 0),
                             formater.parse(date.getText().toString()),
                             formater.parse(returnDate.getText().toString()),
-                            VeterinarioDatabaseTable.getPorID(db, 0));
+                            VeterinarioDatabaseTable.getPorID(dbr, 0));
+                    VacinaDatabaseTable.saveVacina(dbw, vacina, 0);
 
                     Toast.makeText(getApplication(), "Adicionando nova vacina...", Toast.LENGTH_SHORT).show();
                 } catch (ParseException pe) {

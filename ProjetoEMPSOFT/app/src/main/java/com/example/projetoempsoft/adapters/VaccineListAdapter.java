@@ -9,6 +9,8 @@ import android.widget.TextView;
 import com.example.projetoempsoft.R;
 import com.example.projetoempsoft.models.Vacina;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -38,11 +40,12 @@ public class VaccineListAdapter extends RecyclerView.Adapter<VaccineListAdapter.
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Vacina current = data.get(position);
-        // TODO verificar se quebra com essa mudanca
+
+        DateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
         holder.vaccineTypeText.setText(current.getTipoVacina().getNome());
         holder.veterinarianText.setText(current.getVeterinario().getNome());
-        holder.date.setText(current.getData().toString());
-        holder.returnDateText.setText(current.getDataRetorno().toString());
+        holder.date.setText(formater.format(current.getData()));
+        holder.returnDateText.setText(formater.format(current.getDataRetorno()));
     }
 
     @Override

@@ -1,0 +1,3 @@
+- Na aba de serviço, se houver muitos itens na lista de PetShops, a lista de Veterinarios não fica
+    visivel, e não tem como mover a tela para mostrar os veterinarios
+- Na tela de adicionar novo Agendamento, clicar na caixa de data crasha

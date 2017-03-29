@@ -3,10 +3,15 @@ package com.example.projetoempsoft.models;
 /**
  * Created by lucasfnf on 20/03/17.
  */
-public class PetShop {
+public class PetShop extends Parceiro {
     private Integer id;
     private String nome;
-    private Endereco endereco;
+
+    public PetShop(Integer id, String nome, String rua, String cidade, String estado, String complemento, String numero, String cep, String telefone) {
+        super(rua, cidade, estado, complemento, numero, cep, telefone);
+        this.id = id;
+        this.nome = nome;
+    }
 
     public Integer getId() {
         return id;
@@ -24,31 +29,24 @@ public class PetShop {
         this.nome = nome;
     }
 
-    public Endereco getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
 
         PetShop petShop = (PetShop) o;
 
         if (id != null ? !id.equals(petShop.id) : petShop.id != null) return false;
-        if (nome != null ? !nome.equals(petShop.nome) : petShop.nome != null) return false;
-        return endereco != null ? endereco.equals(petShop.endereco) : petShop.endereco == null;
+        return nome != null ? nome.equals(petShop.nome) : petShop.nome == null;
+
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
+        int result = super.hashCode();
+        result = 31 * result + (id != null ? id.hashCode() : 0);
         result = 31 * result + (nome != null ? nome.hashCode() : 0);
-        result = 31 * result + (endereco != null ? endereco.hashCode() : 0);
         return result;
     }
 }

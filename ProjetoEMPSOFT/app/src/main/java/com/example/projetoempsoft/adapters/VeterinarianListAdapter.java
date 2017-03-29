@@ -8,9 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.projetoempsoft.R;
-//import com.example.projetoempsoft.models.Company;
-import com.example.projetoempsoft.models.Endereco;
-import com.example.projetoempsoft.models.PetShop;
 import com.example.projetoempsoft.models.Veterinario;
 
 import java.util.List;
@@ -48,9 +45,8 @@ public class VeterinarianListAdapter extends RecyclerView.Adapter<VeterinarianLi
 
         holder.veterinarianName.setText(currentCompany.getNome());
 
-        Endereco endereco = currentCompany.getEndereco();
-        String stringEndereco = endereco.getRua() + ", " + endereco.getNumero() + ", "
-                + endereco.getCidade() + " - " + endereco.getEstado();
+        String stringEndereco = currentCompany.getRua() + ", " + currentCompany.getNumero() + ", "
+                + currentCompany.getCidade() + " - " + currentCompany.getEstado();
         holder.veterinarianAddress.setText(stringEndereco);
 
     }

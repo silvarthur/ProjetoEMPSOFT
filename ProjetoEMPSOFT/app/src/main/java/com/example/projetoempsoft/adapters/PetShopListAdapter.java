@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.projetoempsoft.R;
-//import com.example.projetoempsoft.models.Company;
-import com.example.projetoempsoft.models.Endereco;
 import com.example.projetoempsoft.models.PetShop;
 
 import java.util.List;
@@ -47,9 +45,8 @@ public class PetShopListAdapter extends RecyclerView.Adapter<PetShopListAdapter.
 
         holder.petShopName.setText(currentCompany.getNome());
 
-        Endereco endereco = currentCompany.getEndereco();
-        String stringEndereco = endereco.getRua() + ", " + endereco.getNumero() + ", "
-                + endereco.getCidade() + " - " + endereco.getEstado();
+        String stringEndereco = currentCompany.getRua() + ", " + currentCompany.getNumero() + ", "
+                + currentCompany.getCidade() + " - " + currentCompany.getEstado();
         holder.petShopAddress.setText(stringEndereco);
 
     }

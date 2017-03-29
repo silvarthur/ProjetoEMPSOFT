@@ -12,34 +12,29 @@ import com.example.projetoempsoft.models.Vacina;
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "Database.db";
+    private static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NAME = "Database.db";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
+
     public void onCreate(SQLiteDatabase db) {
         createDatabase(db);
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // This database is only a cache for online data, so its upgrade policy is
-        // to simply to discard the data and start over
-
-
-        String SQL_DELETE_VACINA =
-                "DROP TABLE IF EXISTS " + VacinaDatabaseTable.TABLE_NAME;
-        db.execSQL(SQL_DELETE_VACINA);
-        onCreate(db);
-    }
-    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        onUpgrade(db, oldVersion, newVersion);
+        // TODO
     }
 
     private void createDatabase(SQLiteDatabase db) {
-        EnderecoDatabaseTable.createTable(db);
+        UserDatabaseTable.createTable(db);
         VeterinarioDatabaseTable.createTable(db);
+        PetShopDatabaseTable.createTable(db);
+        ItemDatabaseHelper.createDatabase(db);
+        PetsDatabaseTable.createTable(db);
         TipoVacinaDatabaseTable.createTable(db);
         VacinaDatabaseTable.createTable(db);
+        AgendamentoDatabaseTable.createTable(db);
     }
 }
