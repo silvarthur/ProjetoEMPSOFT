@@ -8,5 +8,7 @@ public enum TipoAgendamento {
     TOSA,
     BANHO_E_TOSA,
     CONSULTA,
+    BANHO_CONSULTA,
+    TOSA_CONSULTA,
     BANHO_TOSA_CONSULTA
 }

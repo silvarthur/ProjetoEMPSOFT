@@ -31,6 +31,7 @@ import com.example.projetoempsoft.helper.DatabaseHelper;
 import com.example.projetoempsoft.models.Agendamento;
 import com.example.projetoempsoft.models.StatusAgendamento;
 import com.example.projetoempsoft.models.TipoAgendamento;
+import com.example.projetoempsoft.models.User;
 
 import java.util.Date;
 
@@ -160,7 +161,9 @@ public class NewScheduleFragment extends Fragment {
                     e.printStackTrace();
                 }
 
-                Agendamento ag = new Agendamento(getCheckedBoxes(banho, tosa, consulta), scheduleDateObj, hour.getText().toString(), StatusAgendamento.PENDENTE);
+                // TODO precisa ter um usuario em memoria para passar aqui
+                User usuario = new User(0, null, null, null, null, null, null, null, null, null);
+                Agendamento ag = new Agendamento(null, usuario, getCheckedBoxes(banho, tosa, consulta), scheduleDateObj, StatusAgendamento.PENDENTE);
                 DatabaseHelper dbHelper = new DatabaseHelper(getContext());
                 SQLiteDatabase db = dbHelper.getReadableDatabase();
                 AgendamentoDatabaseTable.saveAgendamento(db, ag);
@@ -206,19 +209,36 @@ public class NewScheduleFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    public TipoAgendamento getCheckedBoxes(Checkable banho, Checkable tosa, Checkable consulta){
-        if(banho.isChecked() && tosa.isChecked() && !consulta.isChecked()){
-            return TipoAgendamento.BANHO_E_TOSA;
-        }else if(banho.isChecked() && !tosa.isChecked() && !consulta.isChecked()){
-            return TipoAgendamento.BANHO;
-        }else if(!banho.isChecked() && tosa.isChecked() && !consulta.isChecked()){
-            return TipoAgendamento.TOSA;
-        }else if(!banho.isChecked() && !tosa.isChecked() && consulta.isChecked()){
-            return TipoAgendamento.CONSULTA;
-        }else if(banho.isChecked() && tosa.isChecked() && consulta.isChecked()) {
-            return TipoAgendamento.BANHO_TOSA_CONSULTA;
-        }else{
-            return null;
+    public TipoAgendamento getCheckedBoxes(Checkable banho, Checkable tosa, Checkable consulta) {
+        if (banho.isChecked()) {
+            if (tosa.isChecked()) {
+                if (consulta.isChecked()) {
+                    return TipoAgendamento.BANHO_TOSA_CONSULTA;
+                } else {
+                    return TipoAgendamento.BANHO_E_TOSA;
+                }
+            } else {
+                if (consulta.isChecked()) {
+                    return TipoAgendamento.BANHO_CONSULTA;
+                } else {
+                    return TipoAgendamento.BANHO;
+                }
+            }
+        } else {
+            if (tosa.isChecked()) {
+                if (consulta.isChecked()) {
+                    return TipoAgendamento.TOSA_CONSULTA;
+                } else {
+                    return TipoAgendamento.TOSA;
+                }
+            } else {
+                if (consulta.isChecked()) {
+                    return TipoAgendamento.CONSULTA;
+                } else {
+                    // TODO retornar algum erro por nao ter nenhum tipo configurado
+                    return null;
+                }
+            }
         }
     }
 }

@@ -91,6 +91,8 @@ public class SchedulesFragment extends Fragment {
 
         DatabaseHelper dbHelper = new DatabaseHelper(getContext());
         SQLiteDatabase db = dbHelper.getReadableDatabase();
+        // TODO nesse ponto é necessario ter um User em memoria para passar o ID para o metodo
+        // isso seria para depois do MVP
         List<Agendamento> AgList = AgendamentoDatabaseTable.getAgendamentosPorUsuario(db, 0);
 
         adapter = new ScheduleAdapter(AgList);

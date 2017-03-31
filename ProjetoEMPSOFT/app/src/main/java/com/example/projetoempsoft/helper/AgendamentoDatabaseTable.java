@@ -103,7 +103,7 @@ public final class AgendamentoDatabaseTable implements BaseColumns {
         return agendamento;
     }
 
-    public static List<Agendamento> getTodosPets(SQLiteDatabase db) {
+    public static List<Agendamento> getTodosAgendamentos(SQLiteDatabase db) {
         Cursor cursor = db.rawQuery("select * from "+TABLE_NAME,null);
         Log.d("READ", "Foram lidas "+Integer.toString(cursor.getCount())+" linhas da tabela "+TABLE_NAME);
 
@@ -146,29 +146,28 @@ public final class AgendamentoDatabaseTable implements BaseColumns {
         return items;
     }
 
+    public static void saveAgendamento(SQLiteDatabase db, Agendamento ag){
+        ContentValues values;
+        values = new ContentValues();
+        //values.put(_ID, 1);
+        values.put(COLUMN_NAME_USER, ag.getUser().getId());
+        values.put(COLUMN_NAME_TIPO_AGENDAMENTO, ag.getTipoAgendamento().toString());
+        values.put(COLUMN_NAME_DATA, dateToString(ag.getData()));
+        values.put(COLUMN_NAME_STATUS_AGENDAMENTO, ag.getStatus().toString());
+        db.insert(TABLE_NAME, null, values);
+    }
+
     private static Agendamento converteResultado(SQLiteDatabase db, Cursor cursor) {
         Integer id = cursor.getInt(cursor.getColumnIndexOrThrow(_ID));
         TipoAgendamento tipo = TipoAgendamento.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_TIPO_AGENDAMENTO)));
         Date data;
         try {
-            System.out.println("------------------------------" + cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_DATA)));
             data = stringToDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_DATA)));
         } catch (ParseException pex) {
             data = new Date();
         }
         StatusAgendamento status = StatusAgendamento.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_STATUS_AGENDAMENTO)));
-        return new Agendamento(tipo, data, data.getHours()+":"+data.getMinutes(), status);
-    }
-
-    public static void saveAgendamento(SQLiteDatabase db, Agendamento ag){
-        ContentValues values;
-        values = new ContentValues();
-        //values.put(_ID, 1);
-        values.put(COLUMN_NAME_USER, 0);
-        values.put(COLUMN_NAME_TIPO_AGENDAMENTO, ag.getTipoAgendamento().toString());
-        values.put(COLUMN_NAME_DATA, ag.getFormatedData() + " " + ag.getHora() + ":00");
-        values.put(COLUMN_NAME_STATUS_AGENDAMENTO, ag.getStatus().toString());
-        db.insert(TABLE_NAME, null, values);
+        return new Agendamento(id, null, tipo, data, status);
     }
 
 }

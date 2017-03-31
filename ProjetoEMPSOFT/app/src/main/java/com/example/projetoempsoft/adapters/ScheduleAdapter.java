@@ -39,10 +39,8 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         Agendamento current = agendamentoList.get(position);
         holder.scheduleType.setText(current.getStringTipoAgendamento());
         holder.scheduleStatus.setText(current.getStringStatus());
-        SimpleDateFormat sf = new SimpleDateFormat("dd/MM");
-        SimpleDateFormat sfh = new SimpleDateFormat("hh:mm aa");
-        holder.scheduleDate.setText(sf.format(current.getData()));
-        holder.scheduleHour.setText("[" + sfh.format(current.getData()) + "]");
+        holder.scheduleDate.setText(current.getFormatedData());
+        holder.scheduleHour.setText("[" + current.getHora().toString() + "]");
     }
 
     @Override

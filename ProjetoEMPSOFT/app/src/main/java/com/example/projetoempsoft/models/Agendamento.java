@@ -1,12 +1,6 @@
 package com.example.projetoempsoft.models;
 
-import android.icu.text.SimpleDateFormat;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
-
-import com.example.projetoempsoft.adapters.ScheduleAdapter;
-
-import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -17,13 +11,13 @@ public class Agendamento {
     private User user;
     private TipoAgendamento tipoAgendamento;
     private Date data;
-    private String hora;
     private StatusAgendamento status;
 
-    public Agendamento(TipoAgendamento tipoAgendamento, Date data, String hora, StatusAgendamento status) {
+    public Agendamento(Integer id, User user, TipoAgendamento tipoAgendamento, Date data, StatusAgendamento status) {
+        this.id = id;
+        this.user = user;
         this.tipoAgendamento = tipoAgendamento;
         this.data = data;
-        this.hora = hora;
         this.status = status;
     }
 
@@ -83,14 +77,18 @@ public class Agendamento {
         return data;
     }
 
+    public void setData(Date data) {
+        this.data = data;
+    }
+
     public String getFormatedData(){
-        java.text.SimpleDateFormat df = new java.text.SimpleDateFormat("yyyy-mm-dd");
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM");
         return df.format(this.data).toString();
     }
 
-
-    public void setData(Date data) {
-        this.data = data;
+    public String getHora() {
+        SimpleDateFormat df = new SimpleDateFormat("hh:mm aa");
+        return df.format(this.data).toString();
     }
 
     public StatusAgendamento getStatus() {
@@ -124,9 +122,5 @@ public class Agendamento {
         result = 31 * result + (data != null ? data.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
         return result;
-    }
-
-    public String getHora() {
-        return hora;
     }
 }
