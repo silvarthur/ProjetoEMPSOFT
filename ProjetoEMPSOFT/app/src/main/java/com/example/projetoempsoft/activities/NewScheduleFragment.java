@@ -4,6 +4,8 @@ import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.Build;
@@ -17,12 +19,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.Checkable;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.projetoempsoft.R;
+import com.example.projetoempsoft.helper.AgendamentoDatabaseTable;
+import com.example.projetoempsoft.helper.DatabaseHelper;
+import com.example.projetoempsoft.models.Agendamento;
+import com.example.projetoempsoft.models.StatusAgendamento;
+import com.example.projetoempsoft.models.TipoAgendamento;
+
+import java.util.Date;
 
 
 /**
@@ -73,6 +83,9 @@ public class NewScheduleFragment extends Fragment {
         final EditText date = (EditText) myView.findViewById(R.id.scheduleDate);
         final EditText hour = (EditText) myView.findViewById(R.id.scheduleHour);
         final Button submit = (Button) myView.findViewById(R.id.submitSchedule);
+        final Checkable banho = (Checkable) myView.findViewById(R.id.banhoCheck);
+        final Checkable tosa = (Checkable) myView.findViewById(R.id.tosaCheck);
+        final Checkable consulta = (Checkable) myView.findViewById(R.id.consultaCheck);
 
         date.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -123,7 +136,7 @@ public class NewScheduleFragment extends Fragment {
                     TimePickerDialog.OnTimeSetListener t = new TimePickerDialog.OnTimeSetListener() {
                         public void onTimeSet(TimePicker view, int hourOfDay,
                                               int minute) {
-                            hour.setText(hourOfDay + ":" + minute);
+                            hour.setText(String.format("%02d:%02d", hourOfDay, minute));
                         }
                     };
 
@@ -137,6 +150,20 @@ public class NewScheduleFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(),"Consulta enviada para avaliação, espere confirmação!", Toast.LENGTH_SHORT).show();
+                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                Date scheduleDateObj = null;
+
+                try{
+                    String scheduleDate = date.getText().toString();
+                    scheduleDateObj = df.parse(scheduleDate);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                Agendamento ag = new Agendamento(getCheckedBoxes(banho, tosa, consulta), scheduleDateObj, hour.getText().toString(), StatusAgendamento.PENDENTE);
+                DatabaseHelper dbHelper = new DatabaseHelper(getContext());
+                SQLiteDatabase db = dbHelper.getReadableDatabase();
+                AgendamentoDatabaseTable.saveAgendamento(db, ag);
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 fm.popBackStack();
             }
@@ -177,5 +204,21 @@ public class NewScheduleFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public TipoAgendamento getCheckedBoxes(Checkable banho, Checkable tosa, Checkable consulta){
+        if(banho.isChecked() && tosa.isChecked() && !consulta.isChecked()){
+            return TipoAgendamento.BANHO_E_TOSA;
+        }else if(banho.isChecked() && !tosa.isChecked() && !consulta.isChecked()){
+            return TipoAgendamento.BANHO;
+        }else if(!banho.isChecked() && tosa.isChecked() && !consulta.isChecked()){
+            return TipoAgendamento.TOSA;
+        }else if(!banho.isChecked() && !tosa.isChecked() && consulta.isChecked()){
+            return TipoAgendamento.CONSULTA;
+        }else if(banho.isChecked() && tosa.isChecked() && consulta.isChecked()) {
+            return TipoAgendamento.BANHO_TOSA_CONSULTA;
+        }else{
+            return null;
+        }
     }
 }

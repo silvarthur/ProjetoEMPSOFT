@@ -1,7 +1,12 @@
 package com.example.projetoempsoft.models;
 
+import android.icu.text.SimpleDateFormat;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+
 import com.example.projetoempsoft.adapters.ScheduleAdapter;
 
+import java.text.ParseException;
 import java.util.Date;
 
 /**
@@ -12,13 +17,13 @@ public class Agendamento {
     private User user;
     private TipoAgendamento tipoAgendamento;
     private Date data;
+    private String hora;
     private StatusAgendamento status;
 
-    public Agendamento(Integer id, User user, TipoAgendamento tipoAgendamento, Date data, StatusAgendamento status) {
-        this.id = id;
-        this.user = user;
+    public Agendamento(TipoAgendamento tipoAgendamento, Date data, String hora, StatusAgendamento status) {
         this.tipoAgendamento = tipoAgendamento;
         this.data = data;
+        this.hora = hora;
         this.status = status;
     }
 
@@ -42,6 +47,34 @@ public class Agendamento {
         return tipoAgendamento;
     }
 
+    public String getStringTipoAgendamento(){
+        if(this.tipoAgendamento.equals(TipoAgendamento.BANHO)){
+            return "Banho";
+        }else if(this.tipoAgendamento.equals(TipoAgendamento.BANHO_E_TOSA)){
+            return "Banho e Tosa";
+        }else if(this.tipoAgendamento.equals(TipoAgendamento.TOSA)){
+            return "Tosa";
+        }else if(this.tipoAgendamento.equals(TipoAgendamento.CONSULTA)){
+            return "Consulta";
+        }else if(this.tipoAgendamento.equals(TipoAgendamento.BANHO_TOSA_CONSULTA)){
+            return "Banho, Tosa e Consulta";
+        }return null;
+    }
+
+    public String getStringStatus(){
+        if(this.getStatus().equals(StatusAgendamento.AGENDADO)){
+            return "Agendado";
+        }else if(this.getStatus().equals(StatusAgendamento.CANCELADO)){
+            return "Cancelado";
+        }else if(this.getStatus().equals(StatusAgendamento.EM_ANDAMENTO)){
+            return "Em Andamento";
+        }else if(this.getStatus().equals(StatusAgendamento.PENDENTE)){
+            return "Pendente";
+        }else if(this.getStatus().equals(StatusAgendamento.CONCLUIDO)){
+            return "Concluído";
+        }return null;
+    }
+
     public void setTipoAgendamento(TipoAgendamento tipoAgendamento) {
         this.tipoAgendamento = tipoAgendamento;
     }
@@ -49,6 +82,12 @@ public class Agendamento {
     public Date getData() {
         return data;
     }
+
+    public String getFormatedData(){
+        java.text.SimpleDateFormat df = new java.text.SimpleDateFormat("yyyy-mm-dd");
+        return df.format(this.data).toString();
+    }
+
 
     public void setData(Date data) {
         this.data = data;
@@ -85,5 +124,9 @@ public class Agendamento {
         result = 31 * result + (data != null ? data.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
         return result;
+    }
+
+    public String getHora() {
+        return hora;
     }
 }

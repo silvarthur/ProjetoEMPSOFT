@@ -91,7 +91,6 @@ public class SchedulesFragment extends Fragment {
 
         DatabaseHelper dbHelper = new DatabaseHelper(getContext());
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        // TODO nesse ponto é necessario ter um User em memoria para passar o ID para o metodo
         List<Agendamento> AgList = AgendamentoDatabaseTable.getAgendamentosPorUsuario(db, 0);
 
         adapter = new ScheduleAdapter(AgList);
@@ -133,5 +132,11 @@ public class SchedulesFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
     }
 }

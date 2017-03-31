@@ -37,8 +37,8 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
     @Override
     public void onBindViewHolder(ScheduleAdapter.ViewHolder holder, int position) {
         Agendamento current = agendamentoList.get(position);
-        holder.scheduleType.setText(current.getTipoAgendamento().toString());
-        holder.scheduleStatus.setText(current.getStatus().toString());
+        holder.scheduleType.setText(current.getStringTipoAgendamento());
+        holder.scheduleStatus.setText(current.getStringStatus());
         SimpleDateFormat sf = new SimpleDateFormat("dd/MM");
         SimpleDateFormat sfh = new SimpleDateFormat("hh:mm aa");
         holder.scheduleDate.setText(sf.format(current.getData()));

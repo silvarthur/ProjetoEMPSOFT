@@ -3,7 +3,9 @@ package com.example.projetoempsoft.helper;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.provider.BaseColumns;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 
 import com.example.projetoempsoft.models.Agendamento;
@@ -149,11 +151,24 @@ public final class AgendamentoDatabaseTable implements BaseColumns {
         TipoAgendamento tipo = TipoAgendamento.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_TIPO_AGENDAMENTO)));
         Date data;
         try {
+            System.out.println("------------------------------" + cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_DATA)));
             data = stringToDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_DATA)));
         } catch (ParseException pex) {
             data = new Date();
         }
         StatusAgendamento status = StatusAgendamento.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_STATUS_AGENDAMENTO)));
-        return new Agendamento(id, null, tipo, data, status);
+        return new Agendamento(tipo, data, data.getHours()+":"+data.getMinutes(), status);
     }
+
+    public static void saveAgendamento(SQLiteDatabase db, Agendamento ag){
+        ContentValues values;
+        values = new ContentValues();
+        //values.put(_ID, 1);
+        values.put(COLUMN_NAME_USER, 0);
+        values.put(COLUMN_NAME_TIPO_AGENDAMENTO, ag.getTipoAgendamento().toString());
+        values.put(COLUMN_NAME_DATA, ag.getFormatedData() + " " + ag.getHora() + ":00");
+        values.put(COLUMN_NAME_STATUS_AGENDAMENTO, ag.getStatus().toString());
+        db.insert(TABLE_NAME, null, values);
+    }
+
 }
