@@ -7,7 +7,7 @@
     <ImageView
         android:layout_width="203dp"
         android:layout_height="100dp"
-        android:id="@+id/imageView2"
+        android:id="@+id/itemImage"
         android:src="@drawable/whiskas"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="5dp" />
@@ -49,7 +49,7 @@
         android:layout_marginTop="50dp" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/submit"
         android:layout_width="152dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

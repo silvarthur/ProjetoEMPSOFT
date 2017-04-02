@@ -102,18 +102,30 @@ public class NewScheduleFragment extends Fragment {
         date.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
+                Calendar cal = Calendar.getInstance();
+
                 if(hasFocus){
-                    DatePickerDialog dialog = new DatePickerDialog(getContext());
-                    dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-
-                    dialog.show();
-
-                    dialog.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
+                    DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
                         @Override
                         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                             date.setText(dayOfMonth+"/"+month+"/"+year);
                         }
-                    });
+                    };
+
+
+
+                    DatePickerDialog dialog = new DatePickerDialog(
+                            getContext(),
+                            listener,
+                            cal.get(Calendar.YEAR),
+                            cal.get(Calendar.MONTH),
+                            cal.get(cal.DAY_OF_MONTH)
+                    );
+
+                    dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
+                    dialog.show();
+
                 }
             }
         });
@@ -150,7 +162,7 @@ public class NewScheduleFragment extends Fragment {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(),"Consulta enviada para avaliação, espere confirmação!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),"Consulta enviada para avaliação, espere confirmação!", Toast.LENGTH_LONG).show();
                 SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
                 Date scheduleDateObj = null;
 

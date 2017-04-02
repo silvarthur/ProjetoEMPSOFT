@@ -75,7 +75,7 @@ public final class VacinaDatabaseTable implements BaseColumns {
         values.put(COLUMN_NAME_TIPO_VACINA, 1);
         values.put(COLUMN_NAME_DATA, "2017-01-12 00:00:00");
         values.put(COLUMN_NAME_DATA_RETORNO, "2017-02-12 00:00:00");
-        values.put(COLUMN_NAME_VETERINARIO, 1);
+        values.put(COLUMN_NAME_VETERINARIO, 0);
         db.insert(TABLE_NAME, null, values);
 
         values = new ContentValues();
@@ -84,7 +84,7 @@ public final class VacinaDatabaseTable implements BaseColumns {
         values.put(COLUMN_NAME_TIPO_VACINA, 2);
         values.put(COLUMN_NAME_DATA, "2017-01-12 00:00:00");
         values.put(COLUMN_NAME_DATA_RETORNO, "2017-03-12 00:00:00");
-        values.put(COLUMN_NAME_VETERINARIO, 2);
+        values.put(COLUMN_NAME_VETERINARIO, 0);
         db.insert(TABLE_NAME, null, values);
 
         values = new ContentValues();
@@ -93,7 +93,7 @@ public final class VacinaDatabaseTable implements BaseColumns {
         values.put(COLUMN_NAME_TIPO_VACINA, 3);
         values.put(COLUMN_NAME_DATA, "2017-04-13 00:00:00");
         values.put(COLUMN_NAME_DATA_RETORNO, "2017-06-15 00:00:00");
-        values.put(COLUMN_NAME_VETERINARIO, 3);
+        values.put(COLUMN_NAME_VETERINARIO, 0);
         db.insert(TABLE_NAME, null, values);
     }
 

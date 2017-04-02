@@ -26,7 +26,8 @@
                 android:layout_marginLeft="18dp"
                 android:layout_marginStart="18dp"
                 android:layout_marginTop="12dp"
-                android:text="Tipo de Vacina"
+                android:text="Agendamento"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView

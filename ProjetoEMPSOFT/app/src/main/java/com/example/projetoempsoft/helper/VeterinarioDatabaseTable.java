@@ -44,13 +44,13 @@ public final class VeterinarioDatabaseTable implements BaseColumns {
         db.execSQL(SQL_CREATE_VETERINARIO);
 
         // INSERINDO DADOS DUMMY
-        String[] nomes = {"Dr. Goku","Dr. Urameshi", "Dr. Monkey D. Ruffy", "Dr. Gohan"};
-        for (int i = 0; i < 4; i++) {
+        String[] nomes = {"Dr. Monkey D. Ruffy","Dr. Urameshi", "Dr. Monkey D. Ruffy", "Dr. Gohan"};
+        for (int i = 0; i < 1; i++) {
             ContentValues values = new ContentValues();
             values.put(_ID, i);
             values.put(COLUMN_NAME_NOME, nomes[i]);
             values.put(COLUMN_NAME_TELEFONE, "(83)3333-3333");
-            values.put(COLUMN_NAME_RUA, "Rua 1");
+            values.put(COLUMN_NAME_RUA, "Aprigio Nepomuceno 123");
             values.put(COLUMN_NAME_CIDADE, "Campina Grande");
             values.put(COLUMN_NAME_ESTADO, "PB");
             values.put(COLUMN_NAME_CEP, "55555-555");

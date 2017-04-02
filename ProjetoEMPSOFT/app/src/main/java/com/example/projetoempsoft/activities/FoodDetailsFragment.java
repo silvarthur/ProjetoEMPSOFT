@@ -6,13 +6,18 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.projetoempsoft.R;
 import com.example.projetoempsoft.helper.DatabaseHelper;
@@ -63,13 +68,26 @@ public class FoodDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         DatabaseHelper dbHelper = new DatabaseHelper(getContext());
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        // TODO porque aqui o item é constante?
-        final Item item = ItemDatabaseHelper.getPorId(db, 0);
+        Bundle args = getArguments();
+        int itemID = args.getInt("id", 0);
+        final Item item = ItemDatabaseHelper.getPorId(db, itemID);
 
         View myView = inflater.inflate(R.layout.fragment_food_details, container, false);
         TextView itemTitle = (TextView) myView.findViewById(R.id.itemTitle);
         TextView itemDesc = (TextView) myView.findViewById(R.id.itemDesc);
+        ImageView img = (ImageView) myView.findViewById(R.id.itemImage);
+        Button btn = (Button) myView.findViewById(R.id.submit);
         final TextView itemPrice = (TextView) myView.findViewById(R.id.itemValue);
+
+        itemTitle.setText(item.getTitulo());
+        itemDesc.setText(item.getDescricao());
+        itemPrice.setText(Double.toString(item.getPreco()));
+
+        if(item.getTitulo().equals("Pedigree")){
+            img.setImageDrawable(getResources().getDrawable(R.drawable.pedigree));
+        }else{
+            img.setImageDrawable(getResources().getDrawable(R.drawable.whiskas));
+        }
 
         final EditText itemQtd = (EditText) myView.findViewById(R.id.itemQtd);
         itemQtd.addTextChangedListener(new TextWatcher() {
@@ -95,6 +113,25 @@ public class FoodDetailsFragment extends Fragment {
         itemTitle.setText(item.getTitulo());
         itemPrice.setText("R$ " + item.getPreco().toString());
 
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(),"Pedido Realizado. Sua compra será entregue em instantes.", Toast.LENGTH_LONG).show();
+
+                Fragment fragment = new OrderDetailsFragment();
+                Bundle args = new Bundle();
+
+                args.putInt("itemID", item.getId());
+                args.putString("valorTotal", (String) itemPrice.getText());
+                args.putString("qtd", itemQtd.getText().toString());
+
+                fragment.setArguments(args);
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.content_main, fragment);
+                fragmentTransaction.commit();
+            }
+        });
         return myView;
     }
 
