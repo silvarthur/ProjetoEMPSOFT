@@ -1,6 +1,7 @@
 package com.example.projetoempsoft.adapters;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.content.Context;
@@ -44,7 +45,7 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
 
     @Override
     public void onBindViewHolder(ShoppingListAdapter.ViewHolder holder, int position) {
-        Item current = listOfItems.get(position);
+        final Item current = listOfItems.get(position);
         holder.itemPrice.setText("R$ " + current.getPreco());
         holder.itemTitle.setText(current.getTitulo());
 
@@ -52,6 +53,9 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
             @Override
             public void onClick(View v) {
                 Fragment fragment = new FoodDetailsFragment();
+                Bundle args = new Bundle();
+                args.putInt("id", current.getId());
+                fragment.setArguments(args);
                 FragmentManager fragmentManager = parentActivity.getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.content_main, fragment);

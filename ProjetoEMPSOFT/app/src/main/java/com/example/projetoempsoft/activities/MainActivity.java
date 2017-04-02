@@ -118,10 +118,6 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_food) {
             toolbar.setTitle("PEDIR RAÇÃO");
             fragment = new FoodOrderingFragment();
-        } else if (id == R.id.nav_settings) {
-
-        } else if (id == R.id.nav_exit) {
-
         }
 
         if(fragment != null)

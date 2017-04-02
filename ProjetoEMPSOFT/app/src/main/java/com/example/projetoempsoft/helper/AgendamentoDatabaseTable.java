@@ -61,8 +61,8 @@ public final class AgendamentoDatabaseTable implements BaseColumns {
         values.put(_ID, 0);
         values.put(COLUMN_NAME_USER, 0);
         values.put(COLUMN_NAME_TIPO_AGENDAMENTO, TipoAgendamento.BANHO.toString());
-        values.put(COLUMN_NAME_DATA, "2017-04-12 15:00:00");
-        values.put(COLUMN_NAME_STATUS_AGENDAMENTO, StatusAgendamento.EM_ANDAMENTO.toString());
+        values.put(COLUMN_NAME_DATA, "2017-04-11 14:00:00");
+        values.put(COLUMN_NAME_STATUS_AGENDAMENTO, StatusAgendamento.CANCELADO.toString());
         db.insert(TABLE_NAME, null, values);
 
         values = new ContentValues();
@@ -71,6 +71,14 @@ public final class AgendamentoDatabaseTable implements BaseColumns {
         values.put(COLUMN_NAME_TIPO_AGENDAMENTO, TipoAgendamento.BANHO_E_TOSA.toString());
         values.put(COLUMN_NAME_DATA, "2017-04-12 15:00:00");
         values.put(COLUMN_NAME_STATUS_AGENDAMENTO, StatusAgendamento.AGENDADO.toString());
+        db.insert(TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(_ID, 2);
+        values.put(COLUMN_NAME_USER, 0);
+        values.put(COLUMN_NAME_TIPO_AGENDAMENTO, TipoAgendamento.CONSULTA.toString());
+        values.put(COLUMN_NAME_DATA, "2017-04-12 16:00:00");
+        values.put(COLUMN_NAME_STATUS_AGENDAMENTO, StatusAgendamento.CONCLUIDO.toString());
         db.insert(TABLE_NAME, null, values);
     }
 

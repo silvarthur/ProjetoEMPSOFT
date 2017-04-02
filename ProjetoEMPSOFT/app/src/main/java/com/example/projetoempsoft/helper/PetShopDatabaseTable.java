@@ -45,12 +45,12 @@ public final class PetShopDatabaseTable implements BaseColumns {
 
         // INSERINDO DADOS DUMMY
         String[] nomes = {"Petshop 1","Petshop 2","Petshop 3","Petshop 4"};
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 1; i++) {
             ContentValues values = new ContentValues();
             values.put(_ID, i);
             values.put(COLUMN_NAME_NOME, nomes[i]);
             values.put(COLUMN_NAME_TELEFONE, "(83)3333-3333");
-            values.put(COLUMN_NAME_RUA, "Rua 1");
+            values.put(COLUMN_NAME_RUA, "Floriano Peixoto, 321");
             values.put(COLUMN_NAME_CIDADE, "Campina Grande");
             values.put(COLUMN_NAME_ESTADO, "PB");
             values.put(COLUMN_NAME_CEP, "55555-555");

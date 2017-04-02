@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.projetoempsoft.R;
 import com.example.projetoempsoft.adapters.ScheduleAdapter;
@@ -84,6 +85,8 @@ public class SchedulesFragment extends Fragment {
                 fragmentTransaction.replace(R.id.content_main, fragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
+
+                Toast.makeText(getActivity(),"Seu pedido foi realizado e em minutos será entregue na sua casa!", Toast.LENGTH_SHORT).show();
             }
         });
 

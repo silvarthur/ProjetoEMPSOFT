@@ -38,19 +38,19 @@ public final class ItemDatabaseHelper implements BaseColumns {
         values.put(_ID, 0);
         values.put(COLUMN_NAME_TITULO, "Whiskas 300g");
         values.put(COLUMN_NAME_PRECO, 15.00d);
-        values.put(COLUMN_NAME_DESCRICAO, "Ração para gatos cheio de nutrientes que vão fazer o monstro sair da jaula");
+        values.put(COLUMN_NAME_DESCRICAO, "Ração Whiskas têm rígido controle de minerais, zinco, ômega 6, taurina e Vitamina E, substâncias essenciais para proporcionar mais qualidade de vida ao seu bichano.");
         db.insert(TABLE_NAME, null, values);
 
         values.put(_ID, 1);
         values.put(COLUMN_NAME_TITULO, "Pedigree");
         values.put(COLUMN_NAME_PRECO, 15.00d);
-        values.put(COLUMN_NAME_DESCRICAO, "Raçao para caes e gatos");
+        values.put(COLUMN_NAME_DESCRICAO, "É um alimento que ajuda a equilibrar o organismo do seu cão de forma natural e irresistível. Isso porque adicionamos o que é bom: vegetais, grãos integrais e suculentos pedaços macios feitos com carne, fontes naturais de proteínas, carboidratos e vitaminas.");
         db.insert(TABLE_NAME, null, values);
 
         values.put(_ID, 2);
         values.put(COLUMN_NAME_TITULO, "Whiskas 800g");
         values.put(COLUMN_NAME_PRECO, 20.00d);
-        values.put(COLUMN_NAME_DESCRICAO, "Ração para gatos cheio de nutrientes que vão fazer o monstro sair da jaula");
+        values.put(COLUMN_NAME_DESCRICAO, "Ração Whiskas têm rígido controle de minerais, zinco, ômega 6, taurina e Vitamina E, substâncias essenciais para proporcionar mais qualidade de vida ao seu bichano.");
         db.insert(TABLE_NAME, null, values);
     }
 
