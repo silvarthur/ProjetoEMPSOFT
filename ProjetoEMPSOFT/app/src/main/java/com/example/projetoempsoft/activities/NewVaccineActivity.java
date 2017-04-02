@@ -4,7 +4,10 @@ import android.app.DatePickerDialog;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -18,7 +21,6 @@ import com.example.projetoempsoft.helper.TipoVacinaDatabaseTable;
 import com.example.projetoempsoft.helper.VacinaDatabaseTable;
 import com.example.projetoempsoft.helper.VeterinarioDatabaseTable;
 import com.example.projetoempsoft.models.Vacina;
-import com.example.projetoempsoft.models.Veterinario;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -32,11 +34,10 @@ public class NewVaccineActivity extends AppCompatActivity {
 
     EditText vaccineType;
     EditText veterinarian;
-    TextView date;
-    Button chooseDateButton;
-    TextView returnDate;
-    Button chooseReturnDateButton;
-    Button confirmbutton;
+    EditText date;
+    EditText returnDate;
+    Button confirmButton;
+    Button cancelButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,27 +46,58 @@ public class NewVaccineActivity extends AppCompatActivity {
 
         vaccineType = (EditText) findViewById(R.id.vaccineType);
         veterinarian = (EditText) findViewById(R.id.veterinarian);
-        date = (TextView) findViewById(R.id.date);
-        chooseDateButton = (Button) findViewById(R.id.chooseDate);
-        returnDate = (TextView) findViewById(R.id.returnDate);
-        chooseReturnDateButton = (Button) findViewById(R.id.chooseReturnDate);
-        confirmbutton = (Button) findViewById(R.id.confirmVaccine);
+        date = (EditText) findViewById(R.id.date);
+        returnDate = (EditText) findViewById(R.id.returnDate);
+        confirmButton = (Button) findViewById(R.id.confirmVaccine);
+        cancelButton = (Button) findViewById(R.id.cancelVaccine);
 
-        chooseDateButton.setOnClickListener(new View.OnClickListener() {
+        date.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View view) {
-                new DatePickerDialog(NewVaccineActivity.this, listenerOne, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                int inputType = date.getInputType();
+                date.setInputType(InputType.TYPE_NULL);
+                date.onTouchEvent(motionEvent);
+                date.setInputType(inputType);
+                return true;
             }
         });
 
-        chooseReturnDateButton.setOnClickListener(new View.OnClickListener() {
+        date.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onClick(View view) {
-                new DatePickerDialog(NewVaccineActivity.this, listenerTwo, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
+            public void onFocusChange(View view, boolean hasFocus) {
+                if(hasFocus) {
+                    DatePickerDialog dialog = new DatePickerDialog(NewVaccineActivity.this, listenerOne, calendar.get(Calendar.YEAR),
+                            calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+                    dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+                    dialog.show();
+                }
             }
         });
 
-        confirmbutton.setOnClickListener(new View.OnClickListener() {
+        returnDate.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                int inputType = returnDate.getInputType();
+                returnDate.setInputType(InputType.TYPE_NULL);
+                returnDate.onTouchEvent(motionEvent);
+                returnDate.setInputType(inputType);
+                return true;
+            }
+        });
+
+        returnDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if(hasFocus) {
+                    DatePickerDialog dialog = new DatePickerDialog(NewVaccineActivity.this, listenerTwo, calendar.get(Calendar.YEAR),
+                            calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+                    dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+                    dialog.show();
+                }
+            }
+        });
+
+        confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DatabaseHelper mDbHelper = new DatabaseHelper(getApplicationContext());
@@ -89,6 +121,13 @@ public class NewVaccineActivity extends AppCompatActivity {
                 } catch (ParseException pe) {
                     Toast.makeText(getApplication(), "Falha ao adicionar nova vacina...", Toast.LENGTH_SHORT).show();
                 }
+                finish();
+            }
+        });
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 finish();
             }
         });

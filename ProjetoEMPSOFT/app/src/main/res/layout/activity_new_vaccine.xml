@@ -25,33 +25,23 @@
         android:layout_marginTop="20dp"
         android:hint="Veterinário"/>
 
-    <TextView
+    <EditText
         android:id="@+id/date"
+        android:inputType="date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:hint="Data"/>
+        android:hint="Data"
+        android:windowSoftInputMode="stateUnchanged"/>
 
-    <Button
-        android:id="@+id/chooseDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="ESCOLHER DATA"/>
-
-    <TextView
+    <EditText
         android:id="@+id/returnDate"
+        android:inputType="date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:hint="Repetir"/>
-
-    <Button
-        android:id="@+id/chooseReturnDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Escolher Data Para Repetir Vacina"/>
+        android:hint="Data para Retorno"
+        android:windowSoftInputMode="stateUnchanged"/>
 
     <Button
         android:id="@+id/confirmVaccine"
@@ -60,5 +50,13 @@
         android:layout_marginTop="20dp"
         android:text="ADICIONAR VACINA"
         android:backgroundTint="#00cc00"/>
+
+    <Button
+        android:id="@+id/cancelVaccine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="CANCELAR"
+        android:backgroundTint="#f44242"/>
 
 </LinearLayout>
