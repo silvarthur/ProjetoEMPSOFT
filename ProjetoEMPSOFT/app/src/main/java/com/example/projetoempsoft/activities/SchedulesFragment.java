@@ -85,8 +85,6 @@ public class SchedulesFragment extends Fragment {
                 fragmentTransaction.replace(R.id.content_main, fragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
-
-                Toast.makeText(getActivity(),"Seu pedido foi realizado e em minutos será entregue na sua casa!", Toast.LENGTH_SHORT).show();
             }
         });
 
