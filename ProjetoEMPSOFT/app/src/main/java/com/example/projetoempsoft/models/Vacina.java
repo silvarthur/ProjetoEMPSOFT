@@ -8,12 +8,12 @@ import java.util.Date;
 public class Vacina {
     private Integer id;
     private Pets pet;
-    private TipoVacina tipoVacina;
+    private String tipoVacina;
     private Date data;
     private Date dataRetorno;
     private Veterinario veterinario;
 
-    public Vacina(Integer id, Pets pet, TipoVacina tipoVacina, Date data, Date dataRetorno, Veterinario veterinario) {
+    public Vacina(Integer id, Pets pet, String tipoVacina, Date data, Date dataRetorno, Veterinario veterinario) {
         this.id = id;
         this.pet = pet;
         this.tipoVacina = tipoVacina;
@@ -38,11 +38,11 @@ public class Vacina {
         this.pet = pet;
     }
 
-    public TipoVacina getTipoVacina() {
+    public String getTipoVacina() {
         return tipoVacina;
     }
 
-    public void setTipoVacina(TipoVacina tipoVacina) {
+    public void setTipoVacina(String tipoVacina) {
         this.tipoVacina = tipoVacina;
     }
 

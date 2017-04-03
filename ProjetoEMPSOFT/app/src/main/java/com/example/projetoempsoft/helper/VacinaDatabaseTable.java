@@ -48,13 +48,12 @@ public final class VacinaDatabaseTable implements BaseColumns {
                 "CREATE TABLE " + TABLE_NAME + " (" +
                         _ID + " INTEGER NOT NULL," +
                         COLUMN_NAME_PET + " INTEGER NOT NULL," +
-                        COLUMN_NAME_TIPO_VACINA + " INTEGER NOT NULL," +
+                        COLUMN_NAME_TIPO_VACINA + " VARCHAR2(50) NOT NULL," +
                         COLUMN_NAME_DATA + " DATETIME NOT NULL," +
                         COLUMN_NAME_DATA_RETORNO + " DATETIME," +
                         COLUMN_NAME_VETERINARIO + " INTEGER NOT NULL," +
                         "CONSTRAINT PK_Tipo_Vacina PRIMARY KEY ("+_ID+")," +
                         "CONSTRAINT FK_Vacina_Tipo_Vacina FOREIGN KEY ("+COLUMN_NAME_PET+") REFERENCES "+PetsDatabaseTable.TABLE_NAME+"("+PetsDatabaseTable._ID+")" +
-                        "CONSTRAINT FK_Vacina_Tipo_Vacina FOREIGN KEY ("+COLUMN_NAME_TIPO_VACINA+") REFERENCES "+TipoVacinaDatabaseTable.TABLE_NAME+"("+TipoVacinaDatabaseTable._ID+")" +
                         "CONSTRAINT FK_Vacina_Veterinario FOREIGN KEY ("+COLUMN_NAME_VETERINARIO+") REFERENCES "+VeterinarioDatabaseTable.TABLE_NAME+"("+VeterinarioDatabaseTable._ID+"))";
         db.execSQL(SQL_CREATE_VACINA);
 
@@ -63,38 +62,38 @@ public final class VacinaDatabaseTable implements BaseColumns {
         values = new ContentValues();
         values.put(_ID, 0);
         values.put(COLUMN_NAME_PET, 0);
-        values.put(COLUMN_NAME_TIPO_VACINA, 0);
+        values.put(COLUMN_NAME_TIPO_VACINA, "Raiva");
         values.put(COLUMN_NAME_DATA, "2017-01-01 00:00:00");
         values.put(COLUMN_NAME_DATA_RETORNO, "2017-02-02 00:00:00");
         values.put(COLUMN_NAME_VETERINARIO, 0);
         db.insert(TABLE_NAME, null, values);
 
-        values = new ContentValues();
-        values.put(_ID, 1);
-        values.put(COLUMN_NAME_PET, 0);
-        values.put(COLUMN_NAME_TIPO_VACINA, 1);
-        values.put(COLUMN_NAME_DATA, "2017-01-12 00:00:00");
-        values.put(COLUMN_NAME_DATA_RETORNO, "2017-02-12 00:00:00");
-        values.put(COLUMN_NAME_VETERINARIO, 0);
-        db.insert(TABLE_NAME, null, values);
-
-        values = new ContentValues();
-        values.put(_ID, 2);
-        values.put(COLUMN_NAME_PET, 0);
-        values.put(COLUMN_NAME_TIPO_VACINA, 2);
-        values.put(COLUMN_NAME_DATA, "2017-01-12 00:00:00");
-        values.put(COLUMN_NAME_DATA_RETORNO, "2017-03-12 00:00:00");
-        values.put(COLUMN_NAME_VETERINARIO, 0);
-        db.insert(TABLE_NAME, null, values);
-
-        values = new ContentValues();
-        values.put(_ID, 3);
-        values.put(COLUMN_NAME_PET, 0);
-        values.put(COLUMN_NAME_TIPO_VACINA, 3);
-        values.put(COLUMN_NAME_DATA, "2017-04-13 00:00:00");
-        values.put(COLUMN_NAME_DATA_RETORNO, "2017-06-15 00:00:00");
-        values.put(COLUMN_NAME_VETERINARIO, 0);
-        db.insert(TABLE_NAME, null, values);
+//        values = new ContentValues();
+//        values.put(_ID, 1);
+//        values.put(COLUMN_NAME_PET, 0);
+//        values.put(COLUMN_NAME_TIPO_VACINA, 1);
+//        values.put(COLUMN_NAME_DATA, "2017-01-12 00:00:00");
+//        values.put(COLUMN_NAME_DATA_RETORNO, "2017-02-12 00:00:00");
+//        values.put(COLUMN_NAME_VETERINARIO, 0);
+//        db.insert(TABLE_NAME, null, values);
+//
+//        values = new ContentValues();
+//        values.put(_ID, 2);
+//        values.put(COLUMN_NAME_PET, 0);
+//        values.put(COLUMN_NAME_TIPO_VACINA, 2);
+//        values.put(COLUMN_NAME_DATA, "2017-01-12 00:00:00");
+//        values.put(COLUMN_NAME_DATA_RETORNO, "2017-03-12 00:00:00");
+//        values.put(COLUMN_NAME_VETERINARIO, 0);
+//        db.insert(TABLE_NAME, null, values);
+//
+//        values = new ContentValues();
+//        values.put(_ID, 3);
+//        values.put(COLUMN_NAME_PET, 0);
+//        values.put(COLUMN_NAME_TIPO_VACINA, 3);
+//        values.put(COLUMN_NAME_DATA, "2017-04-13 00:00:00");
+//        values.put(COLUMN_NAME_DATA_RETORNO, "2017-06-15 00:00:00");
+//        values.put(COLUMN_NAME_VETERINARIO, 0);
+//        db.insert(TABLE_NAME, null, values);
     }
 
     public static Vacina getPorId(SQLiteDatabase db, Integer id) {
@@ -179,8 +178,8 @@ public final class VacinaDatabaseTable implements BaseColumns {
         }
         cursor.close();
         ContentValues values = new ContentValues();
-        values.put(_ID, max + 1);
-        values.put(COLUMN_NAME_TIPO_VACINA, vacina.getTipoVacina().getId());
+        //values.put(_ID, max + 1);
+        values.put(COLUMN_NAME_TIPO_VACINA, vacina.getTipoVacina());
         values.put(COLUMN_NAME_PET, petID);
         values.put(COLUMN_NAME_DATA, dateToString(vacina.getData()));
         values.put(COLUMN_NAME_DATA_RETORNO, dateToString(vacina.getDataRetorno()));
@@ -190,8 +189,7 @@ public final class VacinaDatabaseTable implements BaseColumns {
 
     private static Vacina converteResultado(SQLiteDatabase db, Cursor cursor) {
         Integer id = cursor.getInt(cursor.getColumnIndexOrThrow(_ID));
-        TipoVacina tipoVacina = TipoVacinaDatabaseTable.getPorID(db,
-                cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_NAME_TIPO_VACINA)));
+        String tipoVacina = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_TIPO_VACINA));
         Date data;
         Date data_retorno;
         try {

@@ -33,7 +33,7 @@ public final class TipoVacinaDatabaseTable implements BaseColumns {
 
         // INSERINDO DADOS DUMMY
         String[] nomes = {"Doença 1","Doença 2","Doença 3","Doença 4"};
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 1; i++) {
             ContentValues values = new ContentValues();
             values.put(_ID, i);
             values.put(COLUMN_NAME_NOME, nomes[i]);

@@ -42,7 +42,7 @@ public class VaccineListAdapter extends RecyclerView.Adapter<VaccineListAdapter.
         Vacina current = data.get(position);
 
         DateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
-        holder.vaccineTypeText.setText(current.getTipoVacina().getNome());
+        holder.vaccineTypeText.setText(current.getTipoVacina());
         holder.veterinarianText.setText(current.getVeterinario().getNome());
         holder.date.setText(formater.format(current.getData()));
         holder.returnDateText.setText(formater.format(current.getDataRetorno()));

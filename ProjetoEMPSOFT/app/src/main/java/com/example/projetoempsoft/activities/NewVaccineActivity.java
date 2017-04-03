@@ -111,7 +111,7 @@ public class NewVaccineActivity extends AppCompatActivity {
                     vacina = new Vacina(
                             0,
                             PetsDatabaseTable.getPorId(dbr, 0),
-                            TipoVacinaDatabaseTable.getPorID(dbr, 0),
+                            vaccineType.getText().toString(),
                             formater.parse(date.getText().toString()),
                             formater.parse(returnDate.getText().toString()),
                             VeterinarioDatabaseTable.getPorID(dbr, 0));
