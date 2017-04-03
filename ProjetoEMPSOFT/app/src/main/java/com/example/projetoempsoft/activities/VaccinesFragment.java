@@ -49,6 +49,10 @@ public class VaccinesFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
+    DatabaseHelper mDbHelper;
+    SQLiteDatabase db;
+
+
     public VaccinesFragment() {
         // Required empty public constructor
     }
@@ -86,8 +90,8 @@ public class VaccinesFragment extends Fragment {
 
         listOfVaccines = (RecyclerView) view.findViewById(R.id.vaccinesList);
 
-        DatabaseHelper mDbHelper = new DatabaseHelper(getContext());
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+        mDbHelper = new DatabaseHelper(getContext());
+        db = mDbHelper.getReadableDatabase();
         // TODO nesse ponto é necessario ter um Pet na memoria para passar o id como parametro
         List<Vacina> data = VacinaDatabaseTable.getVacinasPet(db, 0);
 
@@ -147,4 +151,17 @@ public class VaccinesFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        List<Vacina> data = VacinaDatabaseTable.getVacinasPet(db, 0);
+
+        adapter = new VaccineListAdapter(data);
+
+        listOfVaccines.setAdapter(adapter);
+        listOfVaccines.setLayoutManager(new LinearLayoutManager(this.getContext()));
+
+        adapter.notifyDataSetChanged();
+    }
 }
