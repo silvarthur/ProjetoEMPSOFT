@@ -8,9 +8,12 @@ import android.text.InputType;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,17 +30,19 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class NewVaccineActivity extends AppCompatActivity {
+public class NewVaccineActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     Calendar calendar = Calendar.getInstance();
     DateFormat formatDate = DateFormat.getDateTimeInstance();
 
     EditText vaccineType;
-    EditText veterinarian;
     EditText date;
     EditText returnDate;
     Button confirmButton;
     Button cancelButton;
+
+    Spinner listVeterinarians;
+    String veterinarianSelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +50,17 @@ public class NewVaccineActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_vaccine);
 
         vaccineType = (EditText) findViewById(R.id.vaccineType);
-        veterinarian = (EditText) findViewById(R.id.veterinarian);
         date = (EditText) findViewById(R.id.date);
         returnDate = (EditText) findViewById(R.id.returnDate);
         confirmButton = (Button) findViewById(R.id.confirmVaccine);
         cancelButton = (Button) findViewById(R.id.cancelVaccine);
+
+        listVeterinarians = (Spinner) findViewById(R.id.veterians_spinner);
+
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(NewVaccineActivity.this,
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.veterinarians));
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        listVeterinarians.setAdapter(spinnerAdapter);
 
         date.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -153,4 +164,14 @@ public class NewVaccineActivity extends AppCompatActivity {
             returnDate.setText(dayOfTheMonth + "/" + (monthOfTheYear + 1) + "/" + year);
         }
     };
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+        veterinarianSelected = adapterView.getItemAtPosition(position).toString();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+        //TODO
+    }
 }

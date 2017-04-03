@@ -18,12 +18,11 @@
         android:layout_marginTop="20dp"
         android:hint="Tipo de Vacina"/>
 
-    <EditText
-        android:id="@+id/veterinarian"
+    <Spinner
+        android:id="@+id/veterians_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:hint="Veterinário"/>
+        android:layout_marginTop="20dp" />
 
     <EditText
         android:id="@+id/date"
